@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -107,13 +107,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LevelAssets_1
+      name: LevelAssets_0
       rect:
         serializedVersion: 2
-        x: 47
-        y: 48
-        width: 17
-        height: 16
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9edab43967480bc4dbdc72dd43ccce35
-      internalID: -1957878650
+      spriteID: 74db6c47f57a79245bdda83ce150dc3c
+      internalID: 153676371
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LevelAssets_0
+      name: LevelAssets_1
       rect:
         serializedVersion: 2
-        x: 14
-        y: 47
-        width: 18
-        height: 17
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,8 +142,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc115671630219348afd7880b287597d
-      internalID: -1139797906
+      spriteID: ac2d45282db286440b3934cf3a4cbaca
+      internalID: -1667556413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LevelAssets_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32358dc48093dee4f8798f655736a7a2
+      internalID: -449166103
       vertices: []
       indices: 
       edges: []
@@ -153,9 +174,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 79
+        y: 32
         width: 32
-        height: 3
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,29 +184,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abe461826152a274e9663171158371d0
-      internalID: -82009517
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LevelAssets_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 15
-        width: 32
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3945b67c9dd047c48bc89262cf7121be
-      internalID: -306149910
+      spriteID: 4432ef9e4f6f6f44ea42bd110835982d
+      internalID: 1471718614
       vertices: []
       indices: 
       edges: []
@@ -195,9 +195,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 15
+        y: 0
         width: 32
-        height: 17
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,8 +205,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5cf4ce4c09c4494b943e90317089c05
-      internalID: 741766664
+      spriteID: 3cfeeb2c2450b5849ac0a3c55a6c7fdb
+      internalID: -472304243
       vertices: []
       indices: 
       edges: []
@@ -222,11 +222,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LevelAssets_0: -1139797906
-      LevelAssets_1: -1957878650
-      LevelAssets_2: -306149910
-      LevelAssets_3: -82009517
-      LevelAssets_4: 741766664
+      LevelAssets_0: 153676371
+      LevelAssets_1: -1667556413
+      LevelAssets_2: -449166103
+      LevelAssets_3: 1471718614
+      LevelAssets_4: -472304243
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
