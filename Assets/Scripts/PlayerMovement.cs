@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, activeTween.EndPos) > 0.1f)
             {
-                float percentage = (Time.time - activeTween.StartTime) / Vector3.Distance(activeTween.StartPos, activeTween.EndPos);
+                float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos)/2);
                 player.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
             }
             if (Vector3.Distance(player.transform.position, activeTween.EndPos) < 0.1f)
@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
                 animatorController.ResetTrigger("Down");
                 animatorController.ResetTrigger("Left");
                 animatorController.ResetTrigger("Up");
+                Debug.Log(Time.time);
             }
             if (Time.time > (temptime + 0.5))
             {
