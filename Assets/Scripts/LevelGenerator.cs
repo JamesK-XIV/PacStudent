@@ -60,17 +60,24 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (levelMap[Y, X] != 0)
                 {
+                    if (X == 0)
+                    {
+                        if (Y == 13)
+                        {
+                           
+                        }
+                    }
                     if (Y == 0 && X == 0)
                     {
                         rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], -1, rotateTypes[Y, X]);
                     }
-                    else if (Y == 0)
+                    else if (X == 0)
                     {
-                        rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], levelMap[Y, X -1], rotateTypes[Y, X]);
+                        rot = SetRotation(levelMap[Y, X], -1, -1, levelMap[Y - 1, X], rotateTypes[Y - 1, X]);
                     }
-                    else if (X == 0) 
+                    else if (Y == 0) 
                     {
-                        rot = SetRotation(levelMap[Y, X], levelMap[Y - 1 , X], rotateTypes[Y - 1, X], -1, rotateTypes[Y, X]);
+                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X -1], rotateTypes[Y, X -1], -1, -1);
                     }
                     else
                     {
@@ -88,7 +95,7 @@ public class LevelGenerator : MonoBehaviour
         temp = true;
     }
 
-    private Vector3 SetRotation(int piece, int uppiece, int uprotate, int leftpiece, int leftrotate)
+    private Vector3 SetRotation(int piece, int leftpiece, int leftrotate, int uppiece, int uprotate)
     {
         Boolean up = false;
         Boolean left = false;
@@ -101,14 +108,14 @@ public class LevelGenerator : MonoBehaviour
         {
             if (uppiece == 1 || uppiece == 3)
             {
-                if (uprotate == 1 || uprotate == 2)
+                if (uprotate == 2 || uprotate == 1)
                 {
                     up = true;
                 }
             }
             if (uppiece == 2 || uppiece == 4)
             {
-                if (uprotate == 1 || uprotate == 3)
+                if (uprotate == 3 || uprotate == 1)
                 {
                     up = true;
                 }
@@ -119,7 +126,7 @@ public class LevelGenerator : MonoBehaviour
         {
             if (leftpiece == 1 || leftpiece == 3)
             {
-                if (leftrotate == 0 || leftrotate == 3)
+                if (leftrotate == 1 || leftrotate == 2)
                 {
                     left = true;
                 }
@@ -142,6 +149,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 return new Vector3(0, 0, 0);
             }
+         
         }
         if (piece == 1 || piece == 3)
         {
