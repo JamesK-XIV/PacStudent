@@ -97,7 +97,7 @@ public class LevelGenerator : MonoBehaviour
             return new Vector3(0, 0, -90);
         }
 
-        if (leftpiece == -1)
+        if (uppiece != -1)
         {
             if (uppiece == 1 || uppiece == 3)
             {
@@ -113,26 +113,54 @@ public class LevelGenerator : MonoBehaviour
                     up = true;
                 }
             }
-            if (piece == 2)
+
+        }
+        if (leftpiece != -1)
+        {
+            if (leftpiece == 1 || leftpiece == 3)
             {
-                if (up)
+                if (leftrotate == 0 || leftrotate == 3)
                 {
-                        return new Vector3(0, 0, 90);
-                }
-                else
-                {
-                    return new Vector3(0, 0, 0);
+                    left = true;
                 }
             }
-            if (piece == 1)
+            if (leftpiece == 2 || leftpiece == 4)
             {
-                if (!up)
+                if (leftrotate == 0 || leftrotate == 2)
                 {
-                    return new Vector3(0, 0, 0);
+                    left = true;
                 }
             }
-
-
+        }
+        if (piece == 2 || piece == 4)
+        {
+            if (up)
+            {
+                return new Vector3(0, 0, 90);
+            }
+            else
+            {
+                return new Vector3(0, 0, 0);
+            }
+        }
+        if (piece == 1 || piece == 3)
+        {
+            if (left && up)
+            {
+                return new Vector3(0, 0, 90);
+            }
+            else if (left)
+            {
+                return new Vector3(0, 0, 180);
+            }
+            else if (up)
+            {
+                return new Vector3(0, 0, 0);
+            }
+            else
+            {
+                return new Vector3(0, 0, -90);
+            }
         }
         return new Vector3(0, 0, 0);
 
