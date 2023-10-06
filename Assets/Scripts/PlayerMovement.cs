@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
                 animatorController.ResetTrigger("Down");
                 animatorController.ResetTrigger("Left");
                 animatorController.ResetTrigger("Up");
-                Debug.Log(Time.time);
             }
             if (Time.time > (temptime + 0.5))
             {
