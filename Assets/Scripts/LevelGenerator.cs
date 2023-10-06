@@ -4,16 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
 public class LevelGenerator : MonoBehaviour
 {
     public GameObject level;
     public List<GameObject> levelSprites;
+    [SerializeField]
+    private Camera cam;
     private GameObject LevelQuad;
     private GameObject LevelQuadBottom;
     private GameObject corner;
     private int[,] rotateTypes;
+
     public int[,] levelMap =
 {
 {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
@@ -39,6 +43,7 @@ public class LevelGenerator : MonoBehaviour
         LevelQuad = new GameObject("LevelQuad");
         LevelQuadBottom = new GameObject("LevelQuadBottom");
         GenerateLevel();
+        setCamera();
     }
 
     // Update is called once per frame
@@ -51,6 +56,8 @@ public class LevelGenerator : MonoBehaviour
     {
         rotateTypes = new int[levelMap.GetLength(0), levelMap.GetLength(1)];
         Vector3 rot;
+        int rightpiece;
+        int bellowpiece;
         for (int X = 0; X < levelMap.GetLength(1); X++)
         {
             for (int Y = 0; Y < levelMap.GetLength(0); Y++)
@@ -58,32 +65,39 @@ public class LevelGenerator : MonoBehaviour
                 if (levelMap[Y, X] != 0)
                 {
                     Boolean bottom = false;
-                    if (X == 13)
-                    {
-                        if (Y == 1)
-                        {
-                           
-                        }
-                    }
+                   
                     if (Y == levelMap.GetLength(0) - 1)
                     {
                         bottom = true;
-                    }
-                    if (Y == 0 && X == 0)
-                    {
-                        rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], -1, rotateTypes[Y, X], bottom);
-                    }
-                    else if (X == 0)
-                    {
-                        rot = SetRotation(levelMap[Y, X], -1, -1, levelMap[Y - 1, X], rotateTypes[Y - 1, X], bottom);
-                    }
-                    else if (Y == 0) 
-                    {
-                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X -1], rotateTypes[Y, X -1], -1, -1, bottom);
+                        bellowpiece = -1;
                     }
                     else
                     {
-                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X - 1], rotateTypes[Y, X - 1], levelMap[Y - 1, X], rotateTypes[Y - 1, X], bottom);
+                        bellowpiece = levelMap[Y + 1, X];
+                    }
+                    if (X == levelMap.GetLength(1) - 1)
+                    {
+                        rightpiece = -1;
+                    }
+                    else
+                    {
+                        rightpiece = levelMap[Y, X + 1];
+                    }
+                    if (Y == 0 && X == 0)
+                    {
+                        rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], -1, rotateTypes[Y, X], bottom, rightpiece, bellowpiece);
+                    }
+                    else if (X == 0)
+                    {
+                        rot = SetRotation(levelMap[Y, X], -1, -1, levelMap[Y - 1, X], rotateTypes[Y - 1, X], bottom, rightpiece, bellowpiece);
+                    }
+                    else if (Y == 0) 
+                    {
+                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X -1], rotateTypes[Y, X -1], -1, -1, bottom, rightpiece, bellowpiece);
+                    }
+                    else
+                    {
+                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X - 1], rotateTypes[Y, X - 1], levelMap[Y - 1, X], rotateTypes[Y - 1, X], bottom, rightpiece, bellowpiece);
                     }
                     rotateTypes[Y, X] = CheckRotate(rot);
                     corner = Instantiate(levelSprites[levelMap[Y, X] - 1], new Vector3(X, -Y, 0), Quaternion.Euler(rot));
@@ -97,13 +111,13 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
-        Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0) * 2 - 3, 0, 0), Quaternion.Euler(0, 180, 0));
-        Instantiate(LevelQuadBottom, new Vector3(0, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 0, 0));
-        Instantiate(LevelQuadBottom, new Vector3(levelMap.GetLength(0) * 2 - 3, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 180, 0));
+        Instantiate(LevelQuad, new Vector3(levelMap.GetLength(1) * 2 - 1, 0, 0), Quaternion.Euler(0, 180, 0));
+        Instantiate(LevelQuadBottom, new Vector3(0, -levelMap.GetLength(0) * 2 + 2, 0), Quaternion.Euler(180, 0, 0));
+        Instantiate(LevelQuadBottom, new Vector3(levelMap.GetLength(1) * 2 - 1, -levelMap.GetLength(0) * 2 + 2, 0), Quaternion.Euler(180, 180, 0));
         Destroy(LevelQuadBottom);
     }
 
-    private Vector3 SetRotation(int piece, int leftpiece, int leftrotate, int uppiece, int uprotate, Boolean bottom)
+    private Vector3 SetRotation(int piece, int leftpiece, int leftrotate, int uppiece, int uprotate, Boolean bottom, int rightpiece, int bellowpiece)
     {
         Boolean up = false;
         Boolean left = false;
@@ -200,14 +214,25 @@ public class LevelGenerator : MonoBehaviour
                 {
                     return new Vector3(0, 0, 0);
                 }
+                else if (bellowpiece == 1 || bellowpiece == 2 || bellowpiece == 3 || bellowpiece == 4 || bellowpiece == 7)
+                {
+                    if (rightpiece == 1 || rightpiece == 2 || rightpiece == 3 || rightpiece == 4 || rightpiece == 7)
+                    {
+                        return new Vector3(0, 0, 180);
+                    }
+                    else
+                    {
+                        return new Vector3(0, 0, 90);
+                    }
+                }
                 else
                 {
-                    return new Vector3(0, 0, 180);
+                    return new Vector3(0, 0, 0);
                 }
             }
             else if (up)
             {
-                return new Vector3(0, 0, 90);
+                return new Vector3(0, 0, -90);
             }
             else if (left)
             {
@@ -236,5 +261,18 @@ public class LevelGenerator : MonoBehaviour
             return 3;
         }
         return 4;
+    }
+    private void setCamera()
+    {
+        cam.transform.position = new Vector3(levelMap.GetLength(1), -levelMap.GetLength(0) + 0.5f, -0.3f);
+        if (levelMap.GetLength(1) > levelMap.GetLength(0))
+        {
+            cam.orthographicSize = levelMap.GetLength(1);
+        }
+        else
+        {
+            cam.orthographicSize = levelMap.GetLength(0);
+        }
+
     }
 }

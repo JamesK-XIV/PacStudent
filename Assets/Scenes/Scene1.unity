@@ -4419,7 +4419,7 @@ GameObject:
   - component: {fileID: 180789400}
   - component: {fileID: 180789402}
   m_Layer: 0
-  m_Name: YellowGhostPhone_0
+  m_Name: YellowGhostPhone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12515,7 +12515,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 16
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -29797,7 +29797,7 @@ MonoBehaviour:
   - {fileID: 1729043194814567487, guid: f9778e4fe2c970f458e803ada982c5fe, type: 3}
   - {fileID: 6400828344243874149, guid: b41061924d1f9674b98ea59fc67d8665, type: 3}
   - {fileID: 4028879574865098733, guid: 0a0b83bc0446fd34e97b59a8963f0c6d, type: 3}
-  test: {fileID: 5351008877963690047, guid: 69b4c0e6860f26642b812ced38f55317, type: 3}
+  cam: {fileID: 519420031}
 --- !u!4 &1139546338
 Transform:
   m_ObjectHideFlags: 0
@@ -42341,7 +42341,7 @@ GameObject:
   - component: {fileID: 1563866649}
   - component: {fileID: 1563866648}
   m_Layer: 0
-  m_Name: Player_0 (1)
+  m_Name: Player_Dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44832,7 +44832,7 @@ GameObject:
   - component: {fileID: 1668518594}
   - component: {fileID: 1668518596}
   m_Layer: 0
-  m_Name: BrownGhostPhone_0
+  m_Name: BrownGhostPhone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46568,7 +46568,7 @@ GameObject:
   - component: {fileID: 1755743038}
   - component: {fileID: 1755743037}
   m_Layer: 0
-  m_Name: PurpleGhostPhone_0
+  m_Name: PurpleGhostPhone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48691,7 +48691,7 @@ GameObject:
   - component: {fileID: 1816951105}
   - component: {fileID: 1816951106}
   m_Layer: 0
-  m_Name: Player_0
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55381,7 +55381,7 @@ GameObject:
   - component: {fileID: 2067407671}
   - component: {fileID: 2067407670}
   m_Layer: 0
-  m_Name: GreenGhostPhone_0
+  m_Name: GreenGhostPhone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
