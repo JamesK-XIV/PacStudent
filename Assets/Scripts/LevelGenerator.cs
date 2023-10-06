@@ -60,28 +60,33 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (levelMap[Y, X] != 0)
                 {
-                    if (X == 0)
+                    Boolean bottom = false;
+                    if (X == 13)
                     {
-                        if (Y == 13)
+                        if (Y == 1)
                         {
                            
                         }
                     }
+                    if (X == levelMap.GetLength(1) - 1)
+                    {
+                        bottom = true;
+                    }
                     if (Y == 0 && X == 0)
                     {
-                        rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], -1, rotateTypes[Y, X]);
+                        rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], -1, rotateTypes[Y, X], bottom);
                     }
                     else if (X == 0)
                     {
-                        rot = SetRotation(levelMap[Y, X], -1, -1, levelMap[Y - 1, X], rotateTypes[Y - 1, X]);
+                        rot = SetRotation(levelMap[Y, X], -1, -1, levelMap[Y - 1, X], rotateTypes[Y - 1, X], bottom);
                     }
                     else if (Y == 0) 
                     {
-                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X -1], rotateTypes[Y, X -1], -1, -1);
+                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X -1], rotateTypes[Y, X -1], -1, -1, bottom);
                     }
                     else
                     {
-                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X - 1], rotateTypes[Y, X - 1], levelMap[Y - 1, X], rotateTypes[Y - 1, X]);
+                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X - 1], rotateTypes[Y, X - 1], levelMap[Y - 1, X], rotateTypes[Y - 1, X], bottom);
                     }
                     rotateTypes[Y, X] = CheckRotate(rot);
                     corner = Instantiate(levelSprites[levelMap[Y, X] - 1], new Vector3(X, -Y, 0), Quaternion.Euler(rot));
@@ -95,7 +100,7 @@ public class LevelGenerator : MonoBehaviour
         temp = true;
     }
 
-    private Vector3 SetRotation(int piece, int leftpiece, int leftrotate, int uppiece, int uprotate)
+    private Vector3 SetRotation(int piece, int leftpiece, int leftrotate, int uppiece, int uprotate, Boolean bottom)
     {
         Boolean up = false;
         Boolean left = false;
@@ -120,13 +125,20 @@ public class LevelGenerator : MonoBehaviour
                     up = true;
                 }
             }
+            if (uppiece == 7)
+            {
+                if (uprotate != 0)
+                {
+                    up = true;
+                }
+            }
 
         }
         if (leftpiece != -1)
         {
             if (leftpiece == 1 || leftpiece == 3)
             {
-                if (leftrotate == 1 || leftrotate == 2)
+                if (leftrotate == 0 || leftrotate == 1)
                 {
                     left = true;
                 }
@@ -134,6 +146,13 @@ public class LevelGenerator : MonoBehaviour
             if (leftpiece == 2 || leftpiece == 4)
             {
                 if (leftrotate == 0 || leftrotate == 2)
+                {
+                    left = true;
+                }
+            }
+            if (leftpiece == 7)
+            {
+                if (leftrotate != 3)
                 {
                     left = true;
                 }
@@ -168,6 +187,28 @@ public class LevelGenerator : MonoBehaviour
             else
             {
                 return new Vector3(0, 0, -90);
+            }
+        }
+        if (piece == 7)
+        {
+            if (up && left)
+            {
+                if (bottom)
+                {
+                    return new Vector3(0, 0, 0);
+                }
+                else
+                {
+                    return new Vector3(0, 0, 180);
+                }
+            }
+            else if (up)
+            {
+                return new Vector3(0, 0, 90);
+            }
+            else if (left)
+            {
+                return new Vector3(0, 0, 180);
             }
         }
         return new Vector3(0, 0, 0);
