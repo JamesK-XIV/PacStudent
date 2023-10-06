@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //private Tween activeTween;
     private Tween activeTween = null;
     public Animator animatorController;
     public AudioSource aud;
