@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,11 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour
 {
     public GameObject level;
-    public List<GameObject> levelSprites = new List<GameObject>();
+    public List<GameObject> levelSprites;
+    public GameObject test;
+    private GameObject LevelQuad;
+    private GameObject corner;
+    private Boolean temp = false;
     public int[,] levelMap =
 {
 {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
@@ -29,16 +34,27 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         Destroy(level);
+        LevelQuad = new GameObject("LevelQuad");
     }
 
     // Update is called once per frame
     void Update()
     {
-        for (int x = 0; x < levelMap.Length; x++)
-        { for (int y = 0; y < levelMap.Length; y++)
+        if (temp == false)
+        {
+            for (int x = 0; x < levelMap.GetLength(0); x++)
             {
+                for (int y = 0; y < levelMap.GetLength(1); y++)
+                {
+                    corner = Instantiate(test, new Vector3(x, -y, 0), Quaternion.identity);
+                    corner.transform.parent = LevelQuad.transform;
+                }
             }
-
+            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0), 0, 0), Quaternion.identity);
+            Instantiate(LevelQuad, new Vector3(0, -levelMap.GetLength(1), 0), Quaternion.identity);
+            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0), -levelMap.GetLength(1), 0), Quaternion.identity);
+            temp = true;
         }
+        
     }
 }
