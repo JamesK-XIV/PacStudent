@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -42,22 +43,53 @@ public class LevelGenerator : MonoBehaviour
     {
         if (temp == false)
         {
-            for (int y = 0; y < levelMap.GetLength(1); y++)
-            {
-                for (int x = 0; x < levelMap.GetLength(0); x++)
-                {
-                    if (levelMap[x,y] != 0)
-                    {
-                        corner = Instantiate(levelSprites[levelMap[x, y] - 1], new Vector3(y, -x, 0), Quaternion.identity);
-                        corner.transform.parent = LevelQuad.transform;
-                    }
-                }
-            }
-            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0)*2-3, 0, 0), Quaternion.Euler(0, 180, 0));
-            Instantiate(LevelQuad, new Vector3(0, -levelMap.GetLength(1)*2, 0), Quaternion.Euler(180, 0, 0));
-            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0) * 2-3, -levelMap.GetLength(1) * 2 , 0), Quaternion.Euler(180, 180, 0));
-            temp = true;
+            GenerateLevel();
         }
         
+    }
+
+    private void GenerateLevel()
+    {
+        Vector3 rot;
+        for (int X = 0; X < levelMap.GetLength(1); X++)
+        {
+            for (int Y = 0; Y < levelMap.GetLength(0); Y++)
+            {
+                if (levelMap[Y, X] != 0)
+                {
+                    if (Y == 0 && X == 0)
+                    {
+                        rot = Rotation(Y, X, levelMap[Y, X], -1, -1);
+                    }
+                    else if (Y == 0)
+                    {
+                        rot = Rotation(Y, X, levelMap[Y, X], -1, levelMap[Y, X -1]);
+                    }
+                    else if (X == 0)
+                    {
+                        rot = Rotation(Y, X, levelMap[Y, X], levelMap[Y - 1 , X], -1);
+                    }
+                    else
+                    {
+                        rot = Rotation(Y, X, levelMap[Y, X], levelMap[Y, X - 1], levelMap[Y - 1, X]);
+                    }
+                    corner = Instantiate(levelSprites[levelMap[Y, X] - 1], new Vector3(X, -Y, 0), Quaternion.Euler(rot));
+                    corner.transform.parent = LevelQuad.transform;
+                }
+            }
+        }
+        Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0) * 2 - 3, 0, 0), Quaternion.Euler(0, 180, 0));
+        Instantiate(LevelQuad, new Vector3(0, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 0, 0));
+        Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0) * 2 - 3, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 180, 0));
+        temp = true;
+    }
+
+    private Vector3 Rotation(int x, int y, int piece, int left, int up)
+    {
+        if (up == -1 && left == -1)
+        {
+            return new Vector3(0, 0, -90);
+        }
+        return new Vector3(0,0,0);
     }
 }
