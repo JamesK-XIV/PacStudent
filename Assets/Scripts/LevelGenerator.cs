@@ -10,11 +10,10 @@ public class LevelGenerator : MonoBehaviour
 {
     public GameObject level;
     public List<GameObject> levelSprites;
-    public GameObject test;
     private GameObject LevelQuad;
+    private GameObject LevelQuadBottom;
     private GameObject corner;
     private int[,] rotateTypes;
-    private Boolean temp = false;
     public int[,] levelMap =
 {
 {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
@@ -38,15 +37,13 @@ public class LevelGenerator : MonoBehaviour
     {
         Destroy(level);
         LevelQuad = new GameObject("LevelQuad");
+        LevelQuadBottom = new GameObject("LevelQuadBottom");
+        GenerateLevel();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (temp == false)
-        {
-            GenerateLevel();
-        }
         
     }
 
@@ -68,7 +65,7 @@ public class LevelGenerator : MonoBehaviour
                            
                         }
                     }
-                    if (X == levelMap.GetLength(1) - 1)
+                    if (Y == levelMap.GetLength(0) - 1)
                     {
                         bottom = true;
                     }
@@ -91,13 +88,19 @@ public class LevelGenerator : MonoBehaviour
                     rotateTypes[Y, X] = CheckRotate(rot);
                     corner = Instantiate(levelSprites[levelMap[Y, X] - 1], new Vector3(X, -Y, 0), Quaternion.Euler(rot));
                     corner.transform.parent = LevelQuad.transform;
+                    if (!bottom)
+                    {
+                        corner = Instantiate(levelSprites[levelMap[Y, X] - 1], new Vector3(X, -Y, 0), Quaternion.Euler(rot));
+                        corner.transform.parent = LevelQuadBottom.transform;
+                    }
+                    
                 }
             }
         }
         Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0) * 2 - 3, 0, 0), Quaternion.Euler(0, 180, 0));
-        Instantiate(LevelQuad, new Vector3(0, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 0, 0));
-        Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0) * 2 - 3, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 180, 0));
-        temp = true;
+        Instantiate(LevelQuadBottom, new Vector3(0, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 0, 0));
+        Instantiate(LevelQuadBottom, new Vector3(levelMap.GetLength(0) * 2 - 3, -levelMap.GetLength(1) * 2, 0), Quaternion.Euler(180, 180, 0));
+        Destroy(LevelQuadBottom);
     }
 
     private Vector3 SetRotation(int piece, int leftpiece, int leftrotate, int uppiece, int uprotate, Boolean bottom)
