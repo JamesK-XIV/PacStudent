@@ -42,17 +42,20 @@ public class LevelGenerator : MonoBehaviour
     {
         if (temp == false)
         {
-            for (int x = 0; x < levelMap.GetLength(0); x++)
+            for (int y = 0; y < levelMap.GetLength(1); y++)
             {
-                for (int y = 0; y < levelMap.GetLength(1); y++)
+                for (int x = 0; x < levelMap.GetLength(0); x++)
                 {
-                    corner = Instantiate(test, new Vector3(x, -y, 0), Quaternion.identity);
-                    corner.transform.parent = LevelQuad.transform;
+                    if (levelMap[x,y] != 0)
+                    {
+                        corner = Instantiate(levelSprites[levelMap[x, y] - 1], new Vector3(y, -x, 0), Quaternion.identity);
+                        corner.transform.parent = LevelQuad.transform;
+                    }
                 }
             }
-            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0), 0, 0), Quaternion.identity);
-            Instantiate(LevelQuad, new Vector3(0, -levelMap.GetLength(1), 0), Quaternion.identity);
-            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0), -levelMap.GetLength(1), 0), Quaternion.identity);
+            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0)*2-3, 0, 0), Quaternion.Euler(0, 180, 0));
+            Instantiate(LevelQuad, new Vector3(0, -levelMap.GetLength(1)*2, 0), Quaternion.Euler(180, 0, 0));
+            Instantiate(LevelQuad, new Vector3(levelMap.GetLength(0) * 2-3, -levelMap.GetLength(1) * 2 , 0), Quaternion.Euler(180, 180, 0));
             temp = true;
         }
         
