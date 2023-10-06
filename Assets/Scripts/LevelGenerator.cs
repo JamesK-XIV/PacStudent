@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,6 +13,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject test;
     private GameObject LevelQuad;
     private GameObject corner;
+    private int[,] rotateTypes;
     private Boolean temp = false;
     public int[,] levelMap =
 {
@@ -50,6 +52,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void GenerateLevel()
     {
+        rotateTypes = new int[levelMap.GetLength(0), levelMap.GetLength(1)];
         Vector3 rot;
         for (int X = 0; X < levelMap.GetLength(1); X++)
         {
@@ -59,20 +62,21 @@ public class LevelGenerator : MonoBehaviour
                 {
                     if (Y == 0 && X == 0)
                     {
-                        rot = Rotation(Y, X, levelMap[Y, X], -1, -1);
+                        rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], -1, rotateTypes[Y, X]);
                     }
                     else if (Y == 0)
                     {
-                        rot = Rotation(Y, X, levelMap[Y, X], -1, levelMap[Y, X -1]);
+                        rot = SetRotation(levelMap[Y, X], -1, rotateTypes[Y, X], levelMap[Y, X -1], rotateTypes[Y, X]);
                     }
-                    else if (X == 0)
+                    else if (X == 0) 
                     {
-                        rot = Rotation(Y, X, levelMap[Y, X], levelMap[Y - 1 , X], -1);
+                        rot = SetRotation(levelMap[Y, X], levelMap[Y - 1 , X], rotateTypes[Y - 1, X], -1, rotateTypes[Y, X]);
                     }
                     else
                     {
-                        rot = Rotation(Y, X, levelMap[Y, X], levelMap[Y, X - 1], levelMap[Y - 1, X]);
+                        rot = SetRotation(levelMap[Y, X], levelMap[Y, X - 1], rotateTypes[Y, X - 1], levelMap[Y - 1, X], rotateTypes[Y - 1, X]);
                     }
+                    rotateTypes[Y, X] = CheckRotate(rot);
                     corner = Instantiate(levelSprites[levelMap[Y, X] - 1], new Vector3(X, -Y, 0), Quaternion.Euler(rot));
                     corner.transform.parent = LevelQuad.transform;
                 }
@@ -84,12 +88,73 @@ public class LevelGenerator : MonoBehaviour
         temp = true;
     }
 
-    private Vector3 Rotation(int x, int y, int piece, int left, int up)
+    private Vector3 SetRotation(int piece, int uppiece, int uprotate, int leftpiece, int leftrotate)
     {
-        if (up == -1 && left == -1)
+        Boolean up = false;
+        Boolean left = false;
+        if (leftpiece == -1 && uppiece == -1)
         {
             return new Vector3(0, 0, -90);
         }
-        return new Vector3(0,0,0);
+
+        if (leftpiece == -1)
+        {
+            if (uppiece == 1 || uppiece == 3)
+            {
+                if (uprotate == 1 || uprotate == 2)
+                {
+                    up = true;
+                }
+            }
+            if (uppiece == 2 || uppiece == 4)
+            {
+                if (uprotate == 1 || uprotate == 3)
+                {
+                    up = true;
+                }
+            }
+            if (piece == 2)
+            {
+                if (up)
+                {
+                        return new Vector3(0, 0, 90);
+                }
+                else
+                {
+                    return new Vector3(0, 0, 0);
+                }
+            }
+            if (piece == 1)
+            {
+                if (!up)
+                {
+                    return new Vector3(0, 0, 0);
+                }
+            }
+
+
+        }
+        return new Vector3(0, 0, 0);
+
+    }
+    private int CheckRotate(Vector3 rot)
+    {
+        if (Vector3.Distance(rot, new Vector3(0, 0, -90)) == 0)
+        {
+            return 1;
+        }
+        else if (Vector3.Distance(rot, new Vector3(0, 0, 0)) == 0)
+        {
+            return 0;
+        }
+        else if (Vector3.Distance(rot, new Vector3(0, 0, 180)) == 0)
+        {
+            return 2;
+        }
+        else if (Vector3.Distance(rot, new Vector3(0, 0, 90)) == 0)
+        {
+            return 3;
+        }
+        return 4;
     }
 }
