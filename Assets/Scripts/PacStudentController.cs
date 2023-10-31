@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class PacStudentController : MonoBehaviour
     public AudioSource aud;
     private float temptime;
     private string lastInput;
+    private string currentInput;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,29 +47,37 @@ public class PacStudentController : MonoBehaviour
         {
             if (lastInput != null)
             {
-                AddTween();
+                if(movementCheck(lastInput))
+                {
+                    currentInput = lastInput;
+                    AddTween();
+                }
+                else if(movementCheck(currentInput))
+                {
+                    AddTween();
+                }
             }
         }
     }
     public void AddTween()
     {
-        if (lastInput.Equals("down"))
+        if (currentInput.Equals("down"))
         {
             activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
             animatorController.SetTrigger("Down");
 
         }
-        else if (lastInput.Equals("right"))
+        else if (currentInput.Equals("right"))
         {
             activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
             animatorController.SetTrigger("Right");
         }
-        else if (lastInput.Equals("left"))
+        else if (currentInput.Equals("left"))
         {
             activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
             animatorController.SetTrigger("Left");
         }
-        else if (lastInput.Equals("up"))
+        else if (currentInput.Equals("up"))
         {
             activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
             animatorController.SetTrigger("Up");
@@ -91,5 +101,41 @@ public class PacStudentController : MonoBehaviour
         {
             lastInput = "up";
         }
+    }
+    public Boolean movementCheck(String input)
+    {
+        if (input.Equals("down"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
+            return (hitCheck(hit));
+        }
+        if (input.Equals("right"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1f);
+            return (hitCheck(hit));
+        }
+        if (input.Equals("left"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 1f);
+            return (hitCheck(hit));
+        }
+        if (input.Equals("up"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
+            return (hitCheck(hit));
+        }
+        return false;
+    }
+    public Boolean hitCheck(RaycastHit2D hit)
+    {
+        if (hit.collider != null)
+        {
+            if (hit.transform.gameObject.tag.Equals("Wall"))
+            {
+                return false;
+            }
+        }
+        return true;
+        
     }
 }
