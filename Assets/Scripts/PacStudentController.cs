@@ -15,6 +15,7 @@ public class PacStudentController : MonoBehaviour
     private string currentInput;
     private GameObject hitObject;
     public ParticleSystem particles;
+    private Boolean playerWasMoving;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,7 @@ public class PacStudentController : MonoBehaviour
         getInput();
         if (activeTween != null)
         {
+            playerWasMoving = true;
             if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) > 0.1f)
             {
                 float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 2);
@@ -153,6 +155,12 @@ public class PacStudentController : MonoBehaviour
             hitObject = hit.transform.gameObject;
             if (hit.transform.gameObject.tag.Equals("Wall"))
             {
+                aud.clip = audioclips[2];
+                if (playerWasMoving)
+                {
+                    aud.Play();
+                    playerWasMoving = false;
+                }
                 return false;
             }
             else if (hit.transform.gameObject.tag.Equals("Pellet"))

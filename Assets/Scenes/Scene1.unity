@@ -54940,6 +54940,7 @@ MonoBehaviour:
   audioclips:
   - {fileID: 8300000, guid: 973364865a7b4574baad27b2a4b5a1fc, type: 3}
   - {fileID: 8300000, guid: e65a0a64293d8cf4ebae50a7bbd0eb35, type: 3}
+  - {fileID: 8300000, guid: c074a163bd3b5ad4dac60d236254ae56, type: 3}
   particles: {fileID: 50165933}
 --- !u!1 &1817494834
 GameObject:
