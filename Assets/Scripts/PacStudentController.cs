@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PacStudentController : MonoBehaviour
@@ -12,10 +13,13 @@ public class PacStudentController : MonoBehaviour
     private float temptime;
     private string lastInput;
     private string currentInput;
+    private GameObject hitObject;
+    public ParticleSystem particles;
     // Start is called before the first frame update
     void Start()
     {
-        
+        spawn();
+        currentInput = "";
     }
 
     // Update is called once per frame
@@ -28,6 +32,17 @@ public class PacStudentController : MonoBehaviour
             {
                 float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 2);
                 gameObject.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
+                if (percentage > 0.5)
+                {
+                    if (hitObject != null)
+                    {
+                        if (hitObject.tag.Equals("Pellet"))
+                        {
+                            Destroy(hitObject);
+                            hitObject = null;
+                        }
+                    }
+                }
             }
             if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) < 0.1f)
             {
@@ -37,6 +52,7 @@ public class PacStudentController : MonoBehaviour
                 animatorController.ResetTrigger("Down");
                 animatorController.ResetTrigger("Left");
                 animatorController.ResetTrigger("Up");
+                animatorController.SetTrigger("Neutral");
             }
             if (Time.time > (temptime + 0.5))
             {
@@ -131,6 +147,7 @@ public class PacStudentController : MonoBehaviour
     {
         if (hit.collider != null)
         {
+            hitObject = hit.transform.gameObject;
             if (hit.transform.gameObject.tag.Equals("Wall"))
             {
                 return false;
@@ -138,12 +155,16 @@ public class PacStudentController : MonoBehaviour
             else if (hit.transform.gameObject.tag.Equals("Pellet"))
             {
                 aud.clip = audioclips[1];
-                Destroy(hit.transform.gameObject);
                 return true;
             }
         }
         aud.clip = audioclips[0];
         return true;
         
+    }
+    public void spawn()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.1f);
+        Destroy(hit.transform.gameObject);
     }
 }
