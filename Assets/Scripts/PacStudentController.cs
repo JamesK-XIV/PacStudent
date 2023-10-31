@@ -8,6 +8,7 @@ public class PacStudentController : MonoBehaviour
     private Tween activeTween = null;
     public Animator animatorController;
     public AudioSource aud;
+    public AudioClip[] audioclips;
     private float temptime;
     private string lastInput;
     private string currentInput;
@@ -134,7 +135,14 @@ public class PacStudentController : MonoBehaviour
             {
                 return false;
             }
+            else if (hit.transform.gameObject.tag.Equals("Pellet"))
+            {
+                aud.clip = audioclips[1];
+                Destroy(hit.transform.gameObject);
+                return true;
+            }
         }
+        aud.clip = audioclips[0];
         return true;
         
     }
