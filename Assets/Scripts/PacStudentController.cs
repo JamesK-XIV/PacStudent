@@ -48,6 +48,7 @@ public class PacStudentController : MonoBehaviour
             {
                 gameObject.transform.position = activeTween.EndPos;
                 activeTween = null;
+                particles.Stop();
                 animatorController.ResetTrigger("Right");
                 animatorController.ResetTrigger("Down");
                 animatorController.ResetTrigger("Left");
@@ -67,10 +68,12 @@ public class PacStudentController : MonoBehaviour
                 if(movementCheck(lastInput))
                 {
                     currentInput = lastInput;
+                    particles.Play();
                     AddTween();
                 }
                 else if(movementCheck(currentInput))
                 {
+                    particles.Play();
                     AddTween();
                 }
             }
