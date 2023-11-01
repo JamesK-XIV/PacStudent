@@ -35,17 +35,6 @@ public class PacStudentController : MonoBehaviour
             {
                 float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 2);
                 gameObject.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
-                if (percentage > 0.5)
-                {
-                    if (hitObject != null)
-                    {
-                        if (hitObject.tag.Equals("Pellet"))
-                        {
-                            Destroy(hitObject);
-                            hitObject = null;
-                        }
-                    }
-                }
             }
             if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) < 0.1f)
             {
@@ -57,6 +46,24 @@ public class PacStudentController : MonoBehaviour
                 animatorController.ResetTrigger("Left");
                 animatorController.ResetTrigger("Up");
                 animatorController.SetTrigger("Neutral");
+                if (hitObject != null)
+                {
+                    if (hitObject.tag.Equals("Pellet"))
+                    {
+                        Destroy(hitObject);
+                    }
+                    else if (hitObject.tag.Equals("TeleporterLeft"))
+                    {
+                        gameObject.transform.position = GameObject.FindGameObjectWithTag("TeleporterRight").transform.position;
+                        AddTween();
+                    }
+                    else if (hitObject.tag.Equals("TeleporterRight"))
+                    {
+                        gameObject.transform.position = GameObject.FindGameObjectWithTag("TeleporterLeft").transform.position;
+                        AddTween();
+                    }
+                }
+                hitObject = null;
             }
             if (Time.time > (temptime + 0.5))
             {
@@ -68,13 +75,13 @@ public class PacStudentController : MonoBehaviour
         {
             if (lastInput != null)
             {
-                if(movementCheck(lastInput))
+                if (movementCheck(lastInput))
                 {
                     currentInput = lastInput;
                     particles.Play();
                     AddTween();
                 }
-                else if(movementCheck(currentInput))
+                else if (movementCheck(currentInput))
                 {
                     particles.Play();
                     AddTween();
@@ -182,10 +189,14 @@ public class PacStudentController : MonoBehaviour
                 aud.clip = audioclips[1];
                 return true;
             }
+            else if (hit.transform.gameObject.tag.Equals("TeleporterLeft") || hit.transform.gameObject.tag.Equals("TeleporterRight"))
+            {
+                return true;
+            }
         }
         aud.clip = audioclips[0];
         return true;
-        
+
     }
     public void spawn()
     {

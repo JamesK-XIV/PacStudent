@@ -7,6 +7,9 @@ TagManager:
   - ExitButton
   - Wall
   - Pellet
+  - Teleporter
+  - TeleporterLeft
+  - TeleporterRight
   layers:
   - Default
   - TransparentFX
