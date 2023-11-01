@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PacStudentController : MonoBehaviour
 {
+    public GameObject player;
+    private bool playerAlive;
     private Tween activeTween = null;
     public Animator animatorController;
     public AudioSource aud;
@@ -24,6 +26,7 @@ public class PacStudentController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerAlive = true;
         playerScore = 0;
         lifeCount = 3;
         currentInput = "";
@@ -32,150 +35,141 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        getInput();
-        if (activeTween != null)
+        if (playerAlive)
         {
-            playerWasMoving = true;
-            if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) > 0.1f)
+            getInput();
+            if (activeTween != null)
             {
-                float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 2);
-                gameObject.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
-            }
-            if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) < 0.1f)
-            {
-                gameObject.transform.position = activeTween.EndPos;
-                activeTween = null;
-                particles.Stop();
-                animatorController.ResetTrigger("Right");
-                animatorController.ResetTrigger("Down");
-                animatorController.ResetTrigger("Left");
-                animatorController.ResetTrigger("Up");
-                animatorController.SetTrigger("Neutral");
-                if (hitObject != null)
+                playerWasMoving = true;
+                if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) > 0.1f)
                 {
-                    if (hitObject.tag.Equals("Pellet") || hitObject.tag.Equals("Cherry"))
-                    {
-                        Destroy(hitObject);
-                    }
-                    else if (hitObject.tag.Equals("TeleporterLeft"))
-                    {
-                        gameObject.transform.position = GameObject.FindGameObjectWithTag("TeleporterRight").transform.position;
-                        AddTween();
-                    }
-                    else if (hitObject.tag.Equals("TeleporterRight"))
-                    {
-                        gameObject.transform.position = GameObject.FindGameObjectWithTag("TeleporterLeft").transform.position;
-                        AddTween();
-                    }
+                    float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 2);
+                    gameObject.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
                 }
-                hitObject = null;
-            }
-            if (Time.time > (temptime + 0.5))
-            {
-                aud.Play();
-                temptime = Time.time;
-            }
-        }
-        else
-        {
-            if (lastInput != null)
-            {
-                if (movementCheck(lastInput))
+                if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) < 0.1f)
                 {
-                    currentInput = lastInput;
-                    particles.Play();
-                    AddTween();
-                }
-                else if (movementCheck(currentInput))
-                {
-                    particles.Play();
-                    AddTween();
-                }
-                else
-                {
-                    aud.clip = audioclips[2];
-                    if (playerWasMoving)
+                    gameObject.transform.position = activeTween.EndPos;
+                    activeTween = null;
+                    particles.Stop();
+                    animatorController.SetTrigger("Neutral");
+                    if (hitObject != null)
                     {
-                        colision.transform.position = hitObject.transform.position;
-                        colision.Play();
-                        aud.Play();
-                        playerWasMoving = false;
+                        if (hitObject.tag.Equals("TeleporterLeft"))
+                        {
+                            gameObject.transform.position = GameObject.FindGameObjectWithTag("TeleporterRight").transform.position;
+                            AddTween();
+                        }
+                        else if (hitObject.tag.Equals("TeleporterRight"))
+                        {
+                            gameObject.transform.position = GameObject.FindGameObjectWithTag("TeleporterLeft").transform.position;
+                            AddTween();
+                        }
                     }
+                    hitObject = null;
+                }
+                if (Time.time > (temptime + 0.5))
+                {
+                    aud.Play();
+                    temptime = Time.time;
                 }
             }
             else
             {
-                gameObject.transform.position = startPos.transform.position;
+                if (lastInput != null)
+                {
+                    if (movementCheck(lastInput))
+                    {
+                        currentInput = lastInput;
+                        particles.Play();
+                        AddTween();
+                    }
+                    else if (movementCheck(currentInput))
+                    {
+                        particles.Play();
+                        AddTween();
+                    }
+                    else
+                    {
+                        aud.clip = audioclips[2];
+                        if (playerWasMoving)
+                        {
+                            colision.transform.position = hitObject.transform.position;
+                            colision.Play();
+                            aud.Play();
+                            playerWasMoving = false;
+                        }
+                    }
+                }
             }
         }
     }
-    public void AddTween()
-    {
-        if (currentInput.Equals("down"))
+        public void AddTween()
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
-            animatorController.SetTrigger("Down");
+            if (currentInput.Equals("down"))
+            {
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
+                animatorController.SetTrigger("Down");
 
+            }
+            else if (currentInput.Equals("right"))
+            {
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
+                animatorController.SetTrigger("Right");
+            }
+            else if (currentInput.Equals("left"))
+            {
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+                animatorController.SetTrigger("Left");
+            }
+            else if (currentInput.Equals("up"))
+            {
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+                animatorController.SetTrigger("Up");
+            }
         }
-        else if (currentInput.Equals("right"))
+        public void getInput()
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
-            animatorController.SetTrigger("Right");
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                lastInput = "down";
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                lastInput = "right";
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                lastInput = "left";
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                lastInput = "up";
+            }
         }
-        else if (currentInput.Equals("left"))
+        public Boolean movementCheck(String input)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
-            animatorController.SetTrigger("Left");
+            if (input.Equals("down"))
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.01f);
+                return (hitCheck(hit));
+            }
+            if (input.Equals("right"))
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.01f);
+                return (hitCheck(hit));
+            }
+            if (input.Equals("left"))
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.01f);
+                return (hitCheck(hit));
+            }
+            if (input.Equals("up"))
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.01f);
+                return (hitCheck(hit));
+            }
+            return false;
         }
-        else if (currentInput.Equals("up"))
-        {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
-            animatorController.SetTrigger("Up");
-        }
-    }
-    public void getInput()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            lastInput = "down";
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            lastInput = "right";
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            lastInput = "left";
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            lastInput = "up";
-        }
-    }
-    public Boolean movementCheck(String input)
-    {
-        if (input.Equals("down"))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.01f);
-            return (hitCheck(hit));
-        }
-        if (input.Equals("right"))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.01f);
-            return (hitCheck(hit));
-        }
-        if (input.Equals("left"))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.01f);
-            return (hitCheck(hit));
-        }
-        if (input.Equals("up"))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.01f);
-            return (hitCheck(hit));
-        }
-        return false;
-    }
     public Boolean hitCheck(RaycastHit2D hit)
     {
         if (hit.collider != null)
@@ -193,23 +187,17 @@ public class PacStudentController : MonoBehaviour
                 }
                 return false;
             }
-            else if (hit.transform.gameObject.tag.Equals("Pellet"))
-            {
-                aud.clip = audioclips[1];
-                playerScore += 10;
-                return true;
-            }
         }
         aud.clip = audioclips[0];
         return true;
-
     }
     public float getScore()
     {
         return playerScore;
     }
-    private void OnTriggerEnter2D(Collider2D collider)
+    IEnumerator OnTriggerEnter2D(Collider2D collider)
     {
+        yield return null;
         if (collider.gameObject.tag.Equals("Pellet"))
         {
             aud.clip = audioclips[1];
@@ -234,17 +222,32 @@ public class PacStudentController : MonoBehaviour
             }
             else
             {
-                playerDeath();
+                if (playerAlive)
+                {
+                    StartCoroutine(playerDeath());
+                }
             }
         }
     }
-    public void playerDeath()
+    IEnumerator playerDeath()
     {
+        playerAlive = false;
         gameManager.UIManager.loseLife();
         lifeCount -= 1;
-        Debug.Log(lifeCount);
-        Debug.Log(gameObject.transform.position);
         lastInput = null;
         currentInput = null;
+        activeTween = null;
+        while (!playerAlive)
+        {
+            gameObject.GetComponent<Animator>().SetTrigger("Neutral");
+            gameObject.GetComponent<Animator>().SetTrigger("Death");
+            yield return new WaitForSeconds(1);
+            player.transform.position = startPos.transform.position;
+            gameObject.GetComponent<Animator>().ResetTrigger("Death");
+            gameObject.GetComponent<Animator>().ResetTrigger("Neutral");
+            Debug.Log(lifeCount);
+            playerAlive = true;
+        }
+        yield return null;
     }
 }
