@@ -18,6 +18,7 @@ public class PacStudentController : MonoBehaviour
     public ParticleSystem colision;
     private bool playerWasMoving;
     private float playerScore;
+    public GhostManager ghostController;
     // Start is called before the first frame update
     void Start()
     {
@@ -213,5 +214,14 @@ public class PacStudentController : MonoBehaviour
             playerScore += 100;
             Destroy(collider.gameObject);
         }
+        else if (collider.gameObject.tag.Equals("PowerUp"))
+        {
+            powerUp();
+            Debug.Log("SUPER TIME");
+        }
+    }
+    private void powerUp()
+    {
+        ghostController.scaredGhosts();
     }
 }

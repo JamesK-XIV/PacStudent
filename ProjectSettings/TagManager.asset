@@ -11,6 +11,7 @@ TagManager:
   - TeleporterRight
   - ScoreTxt
   - Cherry
+  - PowerUp
   layers:
   - Default
   - TransparentFX
