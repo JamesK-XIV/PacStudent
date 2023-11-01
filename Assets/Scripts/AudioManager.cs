@@ -24,4 +24,9 @@ public class AudioManager : MonoBehaviour
         }
         
     }
+    public void scaredGhosts()
+    {
+        aud.clip = clips[2];
+        aud.Play();
+    }
 }

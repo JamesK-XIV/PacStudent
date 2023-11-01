@@ -13,16 +13,19 @@ public class PacStudentController : MonoBehaviour
     private float temptime;
     private string lastInput;
     private string currentInput;
+    private float lifeCount;
     private GameObject hitObject;
     public ParticleSystem particles;
     public ParticleSystem colision;
     private bool playerWasMoving;
     private float playerScore;
-    public GhostManager ghostController;
+    public GameConnector gameManager;
+    public GameObject startPos;
     // Start is called before the first frame update
     void Start()
     {
         playerScore = 0;
+        lifeCount = 3;
         currentInput = "";
     }
 
@@ -99,6 +102,10 @@ public class PacStudentController : MonoBehaviour
                         playerWasMoving = false;
                     }
                 }
+            }
+            else
+            {
+                gameObject.transform.position = startPos.transform.position;
             }
         }
     }
@@ -216,12 +223,28 @@ public class PacStudentController : MonoBehaviour
         }
         else if (collider.gameObject.tag.Equals("PowerUp"))
         {
-            powerUp();
+            gameManager.PowerUp();
             Debug.Log("SUPER TIME");
         }
+        else if (collider.gameObject.tag.Equals("Enemy"))
+        {
+            if (gameManager.GhostManager.getStatus())
+            {
+
+            }
+            else
+            {
+                playerDeath();
+            }
+        }
     }
-    private void powerUp()
+    public void playerDeath()
     {
-        ghostController.scaredGhosts();
+        gameManager.UIManager.loseLife();
+        lifeCount -= 1;
+        Debug.Log(lifeCount);
+        Debug.Log(gameObject.transform.position);
+        lastInput = null;
+        currentInput = null;
     }
 }

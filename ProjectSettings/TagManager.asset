@@ -12,6 +12,10 @@ TagManager:
   - ScoreTxt
   - Cherry
   - PowerUp
+  - UIManager
+  - GhostTimer
+  - Life
+  - Enemy
   layers:
   - Default
   - TransparentFX
