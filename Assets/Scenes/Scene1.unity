@@ -9817,6 +9817,7 @@ GameObject:
   - component: {fileID: 180789400}
   - component: {fileID: 180789402}
   - component: {fileID: 180789403}
+  - component: {fileID: 180789404}
   m_Layer: 0
   m_Name: YellowGhostPhone
   m_TagString: Enemy
@@ -9957,6 +9958,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.71875}
   m_EdgeRadius: 0
+--- !u!114 &180789404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180789399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53486f3e1f8f53f4088a7b5a3d0f50df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &183207017
 GameObject:
   m_ObjectHideFlags: 0
@@ -65777,6 +65790,7 @@ GameObject:
   - component: {fileID: 1668518594}
   - component: {fileID: 1668518596}
   - component: {fileID: 1668518597}
+  - component: {fileID: 1668518598}
   m_Layer: 0
   m_Name: BrownGhostPhone
   m_TagString: Enemy
@@ -65917,6 +65931,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.71875}
   m_EdgeRadius: 0
+--- !u!114 &1668518598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668518593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53486f3e1f8f53f4088a7b5a3d0f50df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1668709391
 GameObject:
   m_ObjectHideFlags: 0
@@ -67560,6 +67586,7 @@ GameObject:
   - component: {fileID: 1755743038}
   - component: {fileID: 1755743037}
   - component: {fileID: 1755743040}
+  - component: {fileID: 1755743041}
   m_Layer: 0
   m_Name: PurpleGhostPhone
   m_TagString: Enemy
@@ -67700,6 +67727,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.71875}
   m_EdgeRadius: 0
+--- !u!114 &1755743041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755743036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53486f3e1f8f53f4088a7b5a3d0f50df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756658851
 GameObject:
   m_ObjectHideFlags: 0
@@ -76503,6 +76542,7 @@ GameObject:
   - component: {fileID: 2067407671}
   - component: {fileID: 2067407670}
   - component: {fileID: 2067407673}
+  - component: {fileID: 2067407674}
   m_Layer: 0
   m_Name: GreenGhostPhone
   m_TagString: Enemy
@@ -76643,6 +76683,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.71875}
   m_EdgeRadius: 0
+--- !u!114 &2067407674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067407669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53486f3e1f8f53f4088a7b5a3d0f50df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2069345025
 GameObject:
   m_ObjectHideFlags: 0

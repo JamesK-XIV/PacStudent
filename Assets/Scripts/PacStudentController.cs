@@ -216,12 +216,13 @@ public class PacStudentController : MonoBehaviour
         }
         else if (collider.gameObject.tag.Equals("Enemy"))
         {
-            if (gameManager.GhostManager.getStatus())
+            if (gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)) == 1)
             {
                 Debug.Log(collider.gameObject.name);
-                gameManager.deadGhost(collider.gameObject.name);
+                playerScore += 300;
+                gameManager.deadGhost(ghostTranslater(collider.gameObject.name));
             }
-            else
+            else if (gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)) == 0)
             {
                 if (playerAlive)
                 {
@@ -251,5 +252,25 @@ public class PacStudentController : MonoBehaviour
             playerAlive = true;
         }
         yield return null;
+    }
+    public int ghostTranslater(string name)
+    {
+        if (name == "GreenGhostPhone")
+        {
+            return 0;
+        }
+        else if (name == "PurpleGhostPhone")
+        {
+            return 1;
+        }
+        else if (name == "BrownGhostPhone")
+        {
+            return 2;
+        }
+        else if (name == "YellowGhostPhone")
+        {
+            return 3;
+        }
+        return 0;
     }
 }

@@ -4,51 +4,69 @@ using UnityEngine;
 
 public class GhostManager : MonoBehaviour
 {
-    private bool ghostScared;
     public GameObject[] ghosts;
-    private bool[] moving = new bool[4];
-    private float scaredTimer;
+    private float[] scaredTimer = new float[4];
+    private float[] deadTimer = new float[4];
     // Start is called before the first frame update
     void Start()
     {
-        ghostScared = false;
+        getController(0).ghostState = 0;
+        getController(1).ghostState = 0;
+        getController(2).ghostState = 0;
+        getController(3).ghostState = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ghostScared)
+        for (int x =  0; x < ghosts.Length; x++)
         {
-            scaredTimer += Time.deltaTime;
-            if (scaredTimer >= 10)
+            if (getController(x).ghostState == 1)
             {
-                ghostScared = true;
+                scaredTimer[x] += Time.deltaTime;
+                if (scaredTimer[x] >= 10)
+                {
+                    getController(x).ghostState = 0;
+                    scaredTimer[x] = 0;
+                }
+            }
+            else if (getController(x).ghostState == 2)
+                deadTimer[x] += Time.deltaTime;
+            if (deadTimer[x] >= 10)
+            {
+                getController(x).ghostState = 0;
+                deadTimer[x] = 0;
             }
         }
     }
 
     public void scaredGhosts()
     {
-        ghostScared = true;
+        getController(0).ghostState = 1;
+        getController(1).ghostState = 1;
+        getController(2).ghostState = 1;
+        getController(3).ghostState = 1;
         ghosts[0].GetComponent<Animator>().SetTrigger("Scared");
         ghosts[1].GetComponent<Animator>().SetTrigger("Scared");
         ghosts[2].GetComponent<Animator>().SetTrigger("Scared");
         ghosts[3].GetComponent<Animator>().SetTrigger("Scared");
     }
 
-    public bool getStatus()
+    public int getStatus(int ghost)
     {
-        return ghostScared;
+        return getController(ghost).ghostState;
     }
-    public void killGhost(string name)
+    public void killGhost(int ghost)
     {
-        if (name.Equals("GreenGhostPhone"))
-        {
-            ghosts[0].GetComponent<Animator>().SetTrigger("Dead");
+            ghosts[ghost].GetComponentInParent<Animator>().SetTrigger("Dead");
             if (Random.Range(0,1) == 0)
             {
-                moving[0] = false;
+                getController(ghost).moving = false;
             }
-        }
+        getController(ghost).ghostState = 2;
+    }
+    public GhostController getController(int ghost)
+    {
+        return ghosts[ghost].GetComponent<GhostController>();
     }
 }

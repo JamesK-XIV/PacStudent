@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public AudioSource aud;
     public AudioClip[] clips;
+    public bool killBool = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!(aud.isPlaying))
+        if (!(aud.isPlaying) && !killBool)
         {
             aud.clip = clips[1];
             aud.Play();
@@ -35,9 +36,11 @@ public class AudioManager : MonoBehaviour
     }
     IEnumerator recoverSong()
     {
+        killBool = true;
         aud.clip = clips[3];
         aud.Play();
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1.8f);
         aud.Stop();
+        killBool = false;
     }
 }

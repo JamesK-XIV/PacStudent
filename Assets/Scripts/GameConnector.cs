@@ -25,9 +25,9 @@ public class GameConnector : MonoBehaviour
         AudioManager.scaredGhosts();
         UIManager.startGhostTimer();
     }
-    public void deadGhost(string name)
+    public void deadGhost(int ghost)
     {
-        GhostManager.killGhost(name);
+        GhostManager.killGhost(ghost);
         AudioManager.ghostRecover();
     }
 }
