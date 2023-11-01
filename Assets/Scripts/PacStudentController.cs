@@ -17,8 +17,7 @@ public class PacStudentController : MonoBehaviour
     private string currentInput;
     private float lifeCount;
     private GameObject hitObject;
-    public ParticleSystem particles;
-    public ParticleSystem colision;
+    public ParticleSystem[] particles;
     private bool playerWasMoving;
     private float playerScore;
     public GameConnector gameManager;
@@ -50,7 +49,7 @@ public class PacStudentController : MonoBehaviour
                 {
                     gameObject.transform.position = activeTween.EndPos;
                     activeTween = null;
-                    particles.Stop();
+                    particles[0].Stop();
                     animatorController.SetTrigger("Neutral");
                     if (hitObject != null)
                     {
@@ -80,12 +79,12 @@ public class PacStudentController : MonoBehaviour
                     if (movementCheck(lastInput))
                     {
                         currentInput = lastInput;
-                        particles.Play();
+                        particles[0].Play();
                         AddTween();
                     }
                     else if (movementCheck(currentInput))
                     {
-                        particles.Play();
+                        particles[0].Play();
                         AddTween();
                     }
                     else
@@ -93,8 +92,8 @@ public class PacStudentController : MonoBehaviour
                         aud.clip = audioclips[2];
                         if (playerWasMoving)
                         {
-                            colision.transform.position = hitObject.transform.position;
-                            colision.Play();
+                            particles[1].transform.position = hitObject.transform.position;
+                            particles[1].Play();
                             aud.Play();
                             playerWasMoving = false;
                         }
@@ -180,8 +179,8 @@ public class PacStudentController : MonoBehaviour
                 aud.clip = audioclips[2];
                 if (playerWasMoving && lastInput.Equals(currentInput))
                 {
-                    colision.transform.position = hit.transform.position;
-                    colision.Play();
+                    particles[1].transform.position = hit.transform.position;
+                    particles[1].Play();
                     aud.Play();
                     playerWasMoving = false;
                 }
@@ -241,6 +240,7 @@ public class PacStudentController : MonoBehaviour
         {
             gameObject.GetComponent<Animator>().SetTrigger("Neutral");
             gameObject.GetComponent<Animator>().SetTrigger("Death");
+            particles[2].Play();
             yield return new WaitForSeconds(1);
             player.transform.position = startPos.transform.position;
             gameObject.GetComponent<Animator>().ResetTrigger("Death");
