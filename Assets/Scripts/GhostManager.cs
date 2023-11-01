@@ -6,6 +6,7 @@ public class GhostManager : MonoBehaviour
 {
     private bool ghostScared;
     public GameObject[] ghosts;
+    private bool[] moving = new bool[4];
     private float scaredTimer;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class GhostManager : MonoBehaviour
             scaredTimer += Time.deltaTime;
             if (scaredTimer >= 10)
             {
-                ghostScared = false;
+                ghostScared = true;
             }
         }
     }
@@ -38,5 +39,16 @@ public class GhostManager : MonoBehaviour
     public bool getStatus()
     {
         return ghostScared;
+    }
+    public void killGhost(string name)
+    {
+        if (name.Equals("GreenGhostPhone"))
+        {
+            ghosts[0].GetComponent<Animator>().SetTrigger("Dead");
+            if (Random.Range(0,1) == 0)
+            {
+                moving[0] = false;
+            }
+        }
     }
 }

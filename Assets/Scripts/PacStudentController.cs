@@ -42,7 +42,7 @@ public class PacStudentController : MonoBehaviour
                 playerWasMoving = true;
                 if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) > 0.1f)
                 {
-                    float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 2);
+                    float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 4);
                     gameObject.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
                 }
                 if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) < 0.1f)
@@ -66,7 +66,7 @@ public class PacStudentController : MonoBehaviour
                     }
                     hitObject = null;
                 }
-                if (Time.time > (temptime + 0.5))
+                if (Time.time > (temptime + 0.5) && !aud.isPlaying)
                 {
                     aud.Play();
                     temptime = Time.time;
@@ -200,6 +200,7 @@ public class PacStudentController : MonoBehaviour
         if (collider.gameObject.tag.Equals("Pellet"))
         {
             aud.clip = audioclips[1];
+            aud.Play();
             playerScore += 10;
             Destroy(collider.gameObject);
         }
@@ -217,7 +218,8 @@ public class PacStudentController : MonoBehaviour
         {
             if (gameManager.GhostManager.getStatus())
             {
-
+                Debug.Log(collider.gameObject.name);
+                gameManager.deadGhost(collider.gameObject.name);
             }
             else
             {

@@ -29,4 +29,15 @@ public class AudioManager : MonoBehaviour
         aud.clip = clips[2];
         aud.Play();
     }
+    public void ghostRecover()
+    {
+        StartCoroutine(recoverSong());
+    }
+    IEnumerator recoverSong()
+    {
+        aud.clip = clips[3];
+        aud.Play();
+        yield return new WaitForSeconds(5);
+        aud.Stop();
+    }
 }
