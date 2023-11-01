@@ -26,8 +26,7 @@ public class CherryController : MonoBehaviour
         {
             spawnCherry();
         }
-        if (!startPos.Equals(new Vector3(0, 0, 0)))
-        {
+        if (cherryClone != null) { 
             cherryClone.transform.position = Vector3.Lerp(startPos, endPos, (Time.time - moveTime) / 10);
             if (Vector3.Distance(cherryClone.transform.position, endPos) < 0.1f)
             {
@@ -49,23 +48,23 @@ public class CherryController : MonoBehaviour
         {
             if (height == 0)
             {
-                cherryClone = Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(1, randomNess, 0)), Quaternion.identity);
+                cherryClone = Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(1, randomNess, 0.5f)), Quaternion.identity);
 
             }
             if (height == 1)
             {
-                cherryClone =  Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(0, randomNess, 0)), Quaternion.identity);
+                cherryClone = Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(0, randomNess, 0.5f)), Quaternion.identity);
             }
         }
         else if (whereIsRandom == 1)
         {
             if (side == 0)
             {
-                cherryClone =  Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(randomNess, 1, 0)), Quaternion.identity);
+                cherryClone =  Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(randomNess, 1, 0.5f)), Quaternion.identity);
             }
             if (side == 1)
             {
-                cherryClone = Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(randomNess, 0, 0)), Quaternion.identity);
+                cherryClone = Instantiate(cherry, Camera.main.ViewportToWorldPoint(new Vector3(randomNess, 0, 0.5f)), Quaternion.identity);
             }
         }
         startPos = cherryClone.transform.position;

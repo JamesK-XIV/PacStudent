@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    private PacStudentController playerController;
+    private Text scoreTxt;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +17,10 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (scoreTxt != null)
+        {
+            scoreTxt.text = ("Score: " + playerController.getScore().ToString());
+        }
     }
     public void LoadFirstLevel()
     {
@@ -40,6 +45,8 @@ public class UIManager : MonoBehaviour
         {
             Button button = GameObject.FindGameObjectWithTag("ExitButton").GetComponent<Button>();
             button.onClick.AddListener(LoadMainMenu);
+            playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PacStudentController>();
+            scoreTxt = GameObject.FindGameObjectWithTag("ScoreTxt").GetComponent<Text>();
         }
     }
 }

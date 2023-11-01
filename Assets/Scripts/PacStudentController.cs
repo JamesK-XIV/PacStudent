@@ -16,11 +16,12 @@ public class PacStudentController : MonoBehaviour
     private GameObject hitObject;
     public ParticleSystem particles;
     public ParticleSystem colision;
-    private Boolean playerWasMoving;
+    private bool playerWasMoving;
+    private float playerScore;
     // Start is called before the first frame update
     void Start()
     {
-        spawn();
+        playerScore = 0;
         currentInput = "";
     }
 
@@ -48,7 +49,7 @@ public class PacStudentController : MonoBehaviour
                 animatorController.SetTrigger("Neutral");
                 if (hitObject != null)
                 {
-                    if (hitObject.tag.Equals("Pellet"))
+                    if (hitObject.tag.Equals("Pellet") || hitObject.tag.Equals("Cherry"))
                     {
                         Destroy(hitObject);
                     }
@@ -147,22 +148,22 @@ public class PacStudentController : MonoBehaviour
     {
         if (input.Equals("down"))
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, 0.01f);
             return (hitCheck(hit));
         }
         if (input.Equals("right"))
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 0.01f);
             return (hitCheck(hit));
         }
         if (input.Equals("left"))
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 1f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 0.01f);
             return (hitCheck(hit));
         }
         if (input.Equals("up"))
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, 0.01f);
             return (hitCheck(hit));
         }
         return false;
@@ -187,10 +188,7 @@ public class PacStudentController : MonoBehaviour
             else if (hit.transform.gameObject.tag.Equals("Pellet"))
             {
                 aud.clip = audioclips[1];
-                return true;
-            }
-            else if (hit.transform.gameObject.tag.Equals("TeleporterLeft") || hit.transform.gameObject.tag.Equals("TeleporterRight"))
-            {
+                playerScore += 10;
                 return true;
             }
         }
@@ -198,9 +196,22 @@ public class PacStudentController : MonoBehaviour
         return true;
 
     }
-    public void spawn()
+    public float getScore()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.1f);
-        Destroy(hit.transform.gameObject);
+        return playerScore;
+    }
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag.Equals("Pellet"))
+        {
+            aud.clip = audioclips[1];
+            playerScore += 10;
+            Destroy(collider.gameObject);
+        }
+        else if (collider.gameObject.tag.Equals("Cherry"))
+        {
+            playerScore += 100;
+            Destroy(collider.gameObject);
+        }
     }
 }

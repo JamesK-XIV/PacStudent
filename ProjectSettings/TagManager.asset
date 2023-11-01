@@ -7,9 +7,10 @@ TagManager:
   - ExitButton
   - Wall
   - Pellet
-  - Teleporter
   - TeleporterLeft
   - TeleporterRight
+  - ScoreTxt
+  - Cherry
   layers:
   - Default
   - TransparentFX
