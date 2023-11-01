@@ -14,6 +14,11 @@ public class GhostManager : MonoBehaviour
         getController(1).ghostState = 0;
         getController(2).ghostState = 0;
         getController(3).ghostState = 0;
+        getController(0).moving = false;
+        getController(1).moving = false;
+        getController(2).moving = false;
+        getController(3).moving = false;
+
     }
 
     // Update is called once per frame
@@ -68,5 +73,12 @@ public class GhostManager : MonoBehaviour
     public GhostController getController(int ghost)
     {
         return ghosts[ghost].GetComponent<GhostController>();
+    }
+    public void setGhosts()
+    {
+        getController(0).moving = true;
+        getController(1).moving = true;
+        getController(2).moving = true;
+        getController(3).moving = true;
     }
 }

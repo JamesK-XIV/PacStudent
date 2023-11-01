@@ -30,4 +30,9 @@ public class GameConnector : MonoBehaviour
         GhostManager.killGhost(ghost);
         AudioManager.ghostRecover();
     }
+    public void StartGame()
+    {
+        PacStudentController.beginMovement();
+        GhostManager.setGhosts();
+    }
 }

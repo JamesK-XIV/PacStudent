@@ -22,9 +22,11 @@ public class PacStudentController : MonoBehaviour
     private float playerScore;
     public GameConnector gameManager;
     public GameObject startPos;
+    private bool canMove;
     // Start is called before the first frame update
     void Start()
     {
+        canMove = false;
         playerAlive = true;
         playerScore = 0;
         lifeCount = 3;
@@ -36,7 +38,10 @@ public class PacStudentController : MonoBehaviour
     {
         if (playerAlive)
         {
-            getInput();
+            if (canMove)
+            {
+                getInput();
+            }
             if (activeTween != null)
             {
                 playerWasMoving = true;
@@ -89,9 +94,9 @@ public class PacStudentController : MonoBehaviour
                     }
                     else
                     {
-                        aud.clip = audioclips[2];
                         if (playerWasMoving)
                         {
+                            aud.clip = audioclips[2];
                             particles[1].transform.position = hitObject.transform.position;
                             particles[1].Play();
                             aud.Play();
@@ -272,5 +277,9 @@ public class PacStudentController : MonoBehaviour
             return 3;
         }
         return 0;
+    }
+    public void beginMovement()
+    {
+        canMove = true;
     }
 }

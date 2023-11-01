@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     private Text scoreTxt;
     private Text GhostTimer;
     private GameObject[] lifes;
+    private Text startTxt;
+    private float countdown = 4;
+    private GameConnector gameConnector;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +22,21 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (scoreTxt != null)
+        if (startTxt != null)
+        {
+            countdown -= Time.deltaTime;
+            startTxt.text = ((int)countdown).ToString();
+            if (countdown <= 1 )
+            {
+                startTxt.text = ("GO!");
+            }
+            if (countdown <= 0 )
+            {
+                startTxt.enabled = false;
+                gameConnector.StartGame();
+            }
+        }
+        else if (scoreTxt != null)
         {
             scoreTxt.text = ("Score: " + playerController.getScore().ToString());
         }
@@ -52,6 +69,8 @@ public class UIManager : MonoBehaviour
             GhostTimer = GameObject.FindGameObjectWithTag("GhostTimer").GetComponent<Text>();
             GhostTimer.enabled = false;
             lifes = GameObject.FindGameObjectsWithTag("Life");
+            startTxt = GameObject.FindGameObjectWithTag("Start").GetComponent<Text>();
+            gameConnector = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
         }
     }
     public void startGhostTimer()

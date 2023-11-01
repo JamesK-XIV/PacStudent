@@ -16,6 +16,8 @@ TagManager:
   - GhostTimer
   - Life
   - Enemy
+  - Start
+  - Connector
   layers:
   - Default
   - TransparentFX
