@@ -74785,7 +74785,7 @@ GameObject:
   - component: {fileID: 1990884704}
   m_Layer: 5
   m_Name: TimerTxt
-  m_TagString: Untagged
+  m_TagString: Timer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74808,7 +74808,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 300, y: 60}
+  m_SizeDelta: {x: 1200, y: 60}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1990884704
 MonoBehaviour:

@@ -218,9 +218,11 @@ public class PacStudentController : MonoBehaviour
         {
             gameManager.PowerUp();
             Debug.Log("SUPER TIME");
+            Destroy(collider.gameObject);
         }
         else if (collider.gameObject.tag.Equals("Enemy"))
         {
+            Debug.Log(gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)));
             if (gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)) == 1)
             {
                 Debug.Log(collider.gameObject.name);
@@ -256,6 +258,7 @@ public class PacStudentController : MonoBehaviour
             Debug.Log(lifeCount);
             playerAlive = true;
         }
+        particles[0].Stop();
         yield return null;
     }
     public int ghostTranslater(string name)

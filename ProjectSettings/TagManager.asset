@@ -18,6 +18,7 @@ TagManager:
   - Enemy
   - Start
   - Connector
+  - Timer
   layers:
   - Default
   - TransparentFX

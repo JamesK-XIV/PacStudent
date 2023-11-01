@@ -5,7 +5,7 @@ using UnityEngine;
 public class GhostManager : MonoBehaviour
 {
     public GameObject[] ghosts;
-    private float[] scaredTimer = new float[4];
+    private float scaredTimer;
     private float[] deadTimer = new float[4];
     // Start is called before the first frame update
     void Start()
@@ -24,15 +24,17 @@ public class GhostManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (scaredTimer != -1)
+        {
+            scaredTimer += Time.deltaTime;
+        }
         for (int x =  0; x < ghosts.Length; x++)
         {
             if (getController(x).ghostState == 1)
             {
-                scaredTimer[x] += Time.deltaTime;
-                if (scaredTimer[x] >= 10)
+                if (scaredTimer >= 10)
                 {
                     getController(x).ghostState = 0;
-                    scaredTimer[x] = 0;
                 }
             }
             else if (getController(x).ghostState == 2)
@@ -42,6 +44,10 @@ public class GhostManager : MonoBehaviour
                 getController(x).ghostState = 0;
                 deadTimer[x] = 0;
             }
+        }
+        if (scaredTimer >= 10)
+        {
+            scaredTimer = -1;
         }
     }
 
@@ -55,6 +61,7 @@ public class GhostManager : MonoBehaviour
         ghosts[1].GetComponent<Animator>().SetTrigger("Scared");
         ghosts[2].GetComponent<Animator>().SetTrigger("Scared");
         ghosts[3].GetComponent<Animator>().SetTrigger("Scared");
+        scaredTimer = 0;
     }
 
     public int getStatus(int ghost)
@@ -80,5 +87,9 @@ public class GhostManager : MonoBehaviour
         getController(1).moving = true;
         getController(2).moving = true;
         getController(3).moving = true;
+    }
+    public bool allAlive()
+    {
+        return (getController(0).ghostState == 0 && getController(1).ghostState == 0 && getController(2).ghostState == 0 && getController(3).ghostState == 0);
     }
 }

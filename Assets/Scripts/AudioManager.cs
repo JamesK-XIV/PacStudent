@@ -6,10 +6,12 @@ public class AudioManager : MonoBehaviour
 {
     public AudioSource aud;
     public AudioClip[] clips;
-    public bool killBool = false;
+    public GameConnector connector;
+    public bool recover = false;
     // Start is called before the first frame update
     void Start()
     {
+        connector = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
         aud.clip = clips[0];
         aud.Play();
         
@@ -18,7 +20,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!(aud.isPlaying) && !killBool)
+        if (!(aud.isPlaying))
         {
             aud.clip = clips[1];
             aud.Play();
@@ -32,15 +34,24 @@ public class AudioManager : MonoBehaviour
     }
     public void ghostRecover()
     {
-        StartCoroutine(recoverSong());
+        aud.Stop();
+        if (!recover)
+        {
+            StartCoroutine(recoverSong());
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(recoverSong());
+        }
     }
     IEnumerator recoverSong()
     {
-        killBool = true;
+        recover = true;
         aud.clip = clips[3];
         aud.Play();
         yield return new WaitForSeconds(1.8f);
         aud.Stop();
-        killBool = false;
+        recover = false;
     }
 }

@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     private Text startTxt;
     private float countdown = 4;
     private GameConnector gameConnector;
+    private Text timerTxt;
+    private float gameTime;
+    private float remainTime = -1;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,19 +29,57 @@ public class UIManager : MonoBehaviour
         {
             countdown -= Time.deltaTime;
             startTxt.text = ((int)countdown).ToString();
-            if (countdown <= 1 )
+            if (countdown <= 1)
             {
                 startTxt.text = ("GO!");
             }
-            if (countdown <= 0 )
+            if (countdown <= 0)
             {
                 startTxt.enabled = false;
                 gameConnector.StartGame();
+                startTxt = null;
             }
         }
-        else if (scoreTxt != null)
+        else
         {
-            scoreTxt.text = ("Score: " + playerController.getScore().ToString());
+            if (scoreTxt != null)
+            {
+                scoreTxt.text = ("Score: " + playerController.getScore().ToString());
+            }
+            if (timerTxt != null)
+            {
+                string displayTime = "";
+                gameTime += Time.deltaTime;
+                int minuteTime = ((int)gameTime / 60);
+                if (minuteTime < 10)
+                {
+                    displayTime = "0" + minuteTime.ToString() + ":";
+                }
+                else
+                {
+                    displayTime = minuteTime.ToString() + ":";
+                }
+                int secondTime = ((int)gameTime) - 60 * minuteTime;
+                if (secondTime < 10)
+                {
+                    displayTime += "0" + secondTime.ToString() + ":";
+                }
+                else
+                {
+                    displayTime += secondTime.ToString() + ":";
+                }
+                int millisecondTime = (int)((gameTime - (int)gameTime) * 100);
+                if (millisecondTime < 10)
+                {
+                    displayTime += "0" + millisecondTime.ToString();
+                }
+                else
+                {
+                    displayTime += millisecondTime.ToString();
+                }
+
+                timerTxt.text = ("Timer: " + displayTime);
+            }
         }
     }
     public void LoadFirstLevel()
@@ -71,16 +112,26 @@ public class UIManager : MonoBehaviour
             lifes = GameObject.FindGameObjectsWithTag("Life");
             startTxt = GameObject.FindGameObjectWithTag("Start").GetComponent<Text>();
             gameConnector = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
+            timerTxt = GameObject.FindGameObjectWithTag("Timer").GetComponent <Text>();
         }
     }
     public void startGhostTimer()
     {
         GhostTimer.enabled = true;
-        StartCoroutine(countDown());
+        if (remainTime != -1)
+        {
+            StartCoroutine(scaredCount());
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(scaredCount());
+
+        }
     }
-    IEnumerator countDown()
+    IEnumerator scaredCount()
     {
-        float remainTime = 10;
+        remainTime = 10;
         while (remainTime >= 0)
         {
             GhostTimer.text = ("Scared Time: " + (remainTime).ToString());
@@ -88,6 +139,7 @@ public class UIManager : MonoBehaviour
             remainTime--;
         }
         GhostTimer.enabled = false;
+        remainTime = -1;
         yield return null;
     }
     public void loseLife()
