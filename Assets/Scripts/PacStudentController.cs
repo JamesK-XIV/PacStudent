@@ -26,6 +26,7 @@ public class PacStudentController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
         canMove = false;
         playerAlive = true;
         playerScore = 0;
@@ -36,12 +37,9 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerAlive)
+        if (GameConnector.currentGameState == GameConnector.GameState.Start)
         {
-            if (canMove)
-            {
-                getInput();
-            }
+            getInput();
             if (activeTween != null)
             {
                 playerWasMoving = true;
@@ -208,6 +206,11 @@ public class PacStudentController : MonoBehaviour
             aud.Play();
             playerScore += 10;
             Destroy(collider.gameObject);
+            Debug.Log(GameObject.FindGameObjectsWithTag("Pellet").Length);
+            if (GameObject.FindGameObjectsWithTag("Pellet").Length == 1)
+            {
+                gameManager.EndGame();
+            }
         }
         else if (collider.gameObject.tag.Equals("Cherry"))
         {
@@ -231,7 +234,12 @@ public class PacStudentController : MonoBehaviour
             }
             else if (gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)) == 0)
             {
-                if (playerAlive)
+                lifeCount = 0;
+                if (lifeCount == 0)
+                {
+                    gameManager.EndGame();
+                }
+                else
                 {
                     StartCoroutine(playerDeath());
                 }
@@ -280,9 +288,5 @@ public class PacStudentController : MonoBehaviour
             return 3;
         }
         return 0;
-    }
-    public void beginMovement()
-    {
-        canMove = true;
     }
 }

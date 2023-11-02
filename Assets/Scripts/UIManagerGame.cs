@@ -4,31 +4,35 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManagerGame : MonoBehaviour
 {
     public GameObject save;
     private PacStudentController playerController;
     public Text scoreTxt;
-    private Text GhostTimer;
-    private GameObject[] lifes;
-    private Text startTxt;
+    public Text GhostTimer;
+    public GameObject[] lifes;
+    public Text startTxt;
     private float countdown = 4;
     public GameConnector gameConnector;
-    private Text timerTxt;
-    private Text gameOverTxt;
+    public Text timerTxt;
+    public Text gameOverTxt;
     private float gameTime;
     private float remainTime = -1;
     // Start is called before the first frame update
     void Start()
     {
+        gameConnector = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
         scoreTxt = GameObject.FindGameObjectWithTag("ScoreTxt").GetComponent<Text>();
+        GhostTimer.enabled = false;
+        gameOverTxt.enabled = false;
+        save = GameObject.FindGameObjectWithTag("Save");
+        save.GetComponent<SaveGameManager>().setConnector();
+        gameConnector.GetComponent<GameConnector>().setupScene();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Scene1")
-        {
         if (startTxt != null)
         {
             countdown -= Time.deltaTime;
@@ -48,7 +52,7 @@ public class UIManager : MonoBehaviour
         {
             if (scoreTxt != null)
             {
-                scoreTxt.text = ("Score: " + playerController.getScore().ToString());
+                scoreTxt.text = ("Score: " + gameConnector.PacStudentController.getScore().ToString());
             }
             if (timerTxt != null)
             {
@@ -86,21 +90,66 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-    }
-    public void LoadFirstLevel()
+    public void LoadMainMenu()
     {
-        DontDestroyOnLoad(save);
-        DontDestroyOnLoad(gameConnector);
-        SceneManager.LoadSceneAsync(1);
+        Destroy(save);
+        gameConnector.MenuState();
+        SceneManager.LoadSceneAsync(0);
     }
-    public void LoadImprovementLevel()
+    public void startGhostTimer()
     {
-        DontDestroyOnLoad (gameObject);
-        SceneManager.LoadSceneAsync(2);
+        GhostTimer.enabled = true;
+        if (remainTime != -1)
+        {
+            StartCoroutine(scaredCount());
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(scaredCount());
+
+        }
+    }
+    IEnumerator scaredCount()
+    {
+        remainTime = 10;
+        while (remainTime >= 0)
+        {
+            GhostTimer.text = ("Scared Time: " + (remainTime).ToString());
+            yield return new WaitForSeconds(1);
+            remainTime--;
+        }
+        GhostTimer.enabled = false;
+        remainTime = -1;
+        yield return null;
+    }
+    public void loseLife()
+    {
+        Debug.Log(lifes.Length);
+        Destroy(lifes[lifes.Length - 1]);
+        lifes = GameObject.FindGameObjectsWithTag("Life");
     }
     public void setScore(int Score)
     {
         scoreTxt = GameObject.FindGameObjectWithTag("ScoreTxt").GetComponent<Text>();
         scoreTxt.text = ("Score: " + Score.ToString());
+    }
+    public void showGameOver()
+    {
+        StartCoroutine(gameOver());
+    }
+
+    IEnumerator gameOver()
+    {
+        int overTime = 10;
+        while (overTime >= 0)
+        {
+            gameOverTxt.enabled = true;
+            yield return new WaitForSeconds(1);
+            overTime--;
+        }
+        gameOverTxt.enabled = false;
+        gameConnector.returnToMenu();
+        yield return null;
     }
 }

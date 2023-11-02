@@ -19,6 +19,9 @@ TagManager:
   - Start
   - Connector
   - Timer
+  - Save
+  - GhostManager
+  - AudioManager
   layers:
   - Default
   - TransparentFX
