@@ -10,7 +10,6 @@ public class GhostController : MonoBehaviour
 {
     // Start is called before the first frame update
     public int ghostState { get; set; }
-    public bool moving { get; set; }
 
     private Tween activeTween = null;
     private int lastDirection;
@@ -142,13 +141,13 @@ public class GhostController : MonoBehaviour
         }
         if (activeTween == null)
         {
-            if (name == "GreenGhostPhone")
-            {
-                DecideMovement(valid);
-            }
-            else if (name == "PurpleGhostPhone")
+            if (name == "PurpleGhostPhone" || ghostState == 1)
             {
                 DecideRun(valid);
+            }
+            else if (name == "GreenGhostPhone")
+            {
+                DecideMovement(valid);
             }
             else if (name == "BrownGhostPhone")
             {
@@ -315,30 +314,30 @@ public class GhostController : MonoBehaviour
         {
             upDistance = Vector3.Distance(transform.position + Vector3.up, target);
         }
-        if (downDistance <= upDistance && downDistance <= rightDistance && downDistance <= leftDistance)
+        if (rightDistance <= upDistance && rightDistance <= downDistance && rightDistance <= leftDistance)
+        {
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
+            //animatorController.SetTrigger("Left");
+            lastDirection = 2;
+        }
+        else if (downDistance <= upDistance && downDistance <= rightDistance && downDistance <= leftDistance)
         {
             activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time, 0.3f);
             lastDirection = 1;
             //animatorController.SetTrigger("Down");
 
         }
-        else if (upDistance <= downDistance && upDistance <= rightDistance && upDistance <= leftDistance)
-        {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.3f);
-            //animatorController.SetTrigger("Right");
-            lastDirection = 4;
-        }
-        else if (rightDistance <= upDistance && rightDistance <= downDistance && rightDistance <= leftDistance)
-        {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
-            //animatorController.SetTrigger("Left");
-            lastDirection = 2;
-        }
         else if (leftDistance <= upDistance && leftDistance <= rightDistance && leftDistance <= downDistance)
         {
             activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
             //animatorController.SetTrigger("Up");
             lastDirection = 3;
+        }
+        else if (upDistance <= downDistance && upDistance <= rightDistance && upDistance <= leftDistance)
+        {
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.3f);
+            //animatorController.SetTrigger("Right");
+            lastDirection = 4;
         }
         Debug.Log(transform.position);
         Debug.Log(gameObject.name + upDistance + " : " + rightDistance + " : " + downDistance + " : " + leftDistance);
@@ -361,9 +360,9 @@ public class GhostController : MonoBehaviour
     {
         if (transform.position.x == 15)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position - Vector3.right, Time.time, 0.3f);
         }
-        if (transform.position.x == 12)
+        else if (transform.position.x == 12)
         {
             activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
         }

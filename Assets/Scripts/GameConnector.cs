@@ -56,7 +56,6 @@ public class GameConnector : MonoBehaviour
     public void StartGame()
     {
         currentGameState = GameState.Start;
-        GhostManager.setGhosts();
     }
     public void MenuState()
     {
