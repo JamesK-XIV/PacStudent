@@ -22,19 +22,25 @@ public class CherryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > timer + 10)
+        if (GameConnector.currentGameState == GameConnector.GameState.Start)
         {
-            spawnCherry();
-        }
-        if (cherryClone != null) { 
-            cherryClone.transform.position = Vector3.Lerp(startPos, endPos, (Time.time - moveTime) / 10);
-            if (Vector3.Distance(cherryClone.transform.position, endPos) < 0.1f)
+
+            timer += Time.deltaTime;
+            if (timer >= 10)
             {
-
-                Destroy(cherryClone);
-                startPos = new Vector3(0, 0, 0);
+                spawnCherry();
             }
+            if (cherryClone != null)
+            {
+                cherryClone.transform.position = Vector3.Lerp(startPos, endPos, (Time.time - moveTime) / 10);
+                if (Vector3.Distance(cherryClone.transform.position, endPos) < 0.1f)
+                {
 
+                    Destroy(cherryClone);
+                    startPos = new Vector3(0, 0, 0);
+                }
+
+            }
         }
     }
     private void spawnCherry()
@@ -68,7 +74,6 @@ public class CherryController : MonoBehaviour
             }
         }
         startPos = cherryClone.transform.position;
-        timer = Time.time;
         moveTime = Time.time;
         endPos = new Vector3(startPos.x - (startPos.x - 13.5f)*2, startPos.y - (startPos.y + 14)*2, 0);
     }

@@ -247,6 +247,7 @@ public class PacStudentController : MonoBehaviour
                 }
                 if (lifeCount == 0)
                 {
+                    Destroy(GetComponent<Rigidbody2D>());
                     gameManager.EndGame();
                 }
             }

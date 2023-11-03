@@ -6,10 +6,14 @@ public class GhostManager : MonoBehaviour
 {
     public GameObject[] ghosts;
     private float scaredTimer;
+    public enum GhostsMusic {normal, scared};
+    public GhostsMusic music = GhostsMusic.normal;
     private float[] deadTimer = new float[4];
+    private GameConnector gameConnector;
     // Start is called before the first frame update
     void Start()
     {
+        gameConnector = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
         getController(0).ghostState = 0;
         getController(1).ghostState = 0;
         getController(2).ghostState = 0;
@@ -29,7 +33,7 @@ public class GhostManager : MonoBehaviour
             if (getController(x).ghostState == 1)
             {
                 ghosts[x].GetComponent<Animator>().SetTrigger("Scared");
-                if (scaredTimer >= 7)
+                if (scaredTimer >= 7 && scaredTimer <= 10)
                 {
                     ghosts[x].GetComponent<Animator>().SetTrigger("Recover");
                     Debug.Log("Recover");
@@ -45,14 +49,17 @@ public class GhostManager : MonoBehaviour
             }
             else if (getController(x).ghostState == 2)
                 deadTimer[x] += Time.deltaTime;
-            if (deadTimer[x] >= 10)
+            if (deadTimer[x] >= 5)
             {
-                if (scaredTimer < 10)
+                if (scaredTimer <= 10 && scaredTimer != -1)
                 {
                     getController(x).ghostState = 1;
                 }
                 else
                 {
+                    ghosts[x].GetComponent<Animator>().ResetTrigger("Scared");
+                    ghosts[x].GetComponent<Animator>().ResetTrigger("Recover");
+                    ghosts[x].GetComponent<Animator>().SetTrigger("Neutral");
                     getController(x).ghostState = 0;
                 }
                 deadTimer[x] = 0;
@@ -60,16 +67,28 @@ public class GhostManager : MonoBehaviour
         }
         if (scaredTimer >= 10)
         {
+            music = GhostsMusic.normal;
             scaredTimer = -1;
+            gameConnector.AudioManager.stopMusic();
+            
         }
     }
 
     public void scaredGhosts()
     {
+        music = GhostsMusic.scared;
         getController(0).ghostState = 1;
         getController(1).ghostState = 1;
         getController(2).ghostState = 1;
         getController(3).ghostState = 1;
+        ghosts[0].GetComponent<Animator>().ResetTrigger("Scared");
+        ghosts[1].GetComponent<Animator>().ResetTrigger("Scared");
+        ghosts[2].GetComponent<Animator>().ResetTrigger("Scared");
+        ghosts[3].GetComponent<Animator>().ResetTrigger("Scared");
+        ghosts[0].GetComponent<Animator>().ResetTrigger("Recover");
+        ghosts[1].GetComponent<Animator>().ResetTrigger("Recover");
+        ghosts[2].GetComponent<Animator>().ResetTrigger("Recover");
+        ghosts[3].GetComponent<Animator>().ResetTrigger("Recover");
         ghosts[0].GetComponent<Animator>().SetTrigger("Neutral");
         ghosts[1].GetComponent<Animator>().SetTrigger("Neutral");
         ghosts[2].GetComponent<Animator>().SetTrigger("Neutral");
@@ -101,5 +120,9 @@ public class GhostManager : MonoBehaviour
     public float getScaredTime()
     {
         return scaredTimer;
+    }
+    public GhostsMusic getMusic()
+    {
+        return music;
     }
 }
