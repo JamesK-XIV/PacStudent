@@ -21,7 +21,7 @@ public class BannerMovement : MonoBehaviour
         {
             if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) > 0.1f)
             {
-                float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos) / 2);
+                float percentage = (Time.time - activeTween.StartTime) / activeTween.Duration;
                 gameObject.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
             }
             if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) < 0.1f)
@@ -43,12 +43,12 @@ public class BannerMovement : MonoBehaviour
     {
         if (moveUp)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 1);
         }
         else
         {
             {
-                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time, 1);
             }
         }
     }

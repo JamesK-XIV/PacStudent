@@ -109,23 +109,23 @@ public class PacStudentController : MonoBehaviour
         {
             if (currentInput.Equals("down"))
             {
-                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time, 0.2f);
                 animatorController.SetTrigger("Down");
 
             }
             else if (currentInput.Equals("right"))
             {
-                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.2f);
                 animatorController.SetTrigger("Right");
             }
             else if (currentInput.Equals("left"))
             {
-                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.2f);
                 animatorController.SetTrigger("Left");
             }
             else if (currentInput.Equals("up"))
             {
-                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.2f);
                 animatorController.SetTrigger("Up");
             }
         }

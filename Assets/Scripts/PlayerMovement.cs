@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, activeTween.EndPos) > 0.1f)
             {
-                float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos)/2);
+                float percentage = (Time.time - activeTween.StartTime) / activeTween.Duration;
                 player.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
             }
             if (Vector3.Distance(player.transform.position, activeTween.EndPos) < 0.1f)
@@ -47,23 +47,23 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Vector3.Distance(player.transform.position, new Vector3(6, -1, 0)) < 0.1f)
         {
-            activeTween = new Tween(player.transform.position, new Vector3(6, -5, 0), Time.time);
+            activeTween = new Tween(player.transform.position, new Vector3(6, -5, 0), Time.time, 0.3f);
             animatorController.SetTrigger("Down");
 
         }
         else if (Vector3.Distance(player.transform.position, new Vector3(1, -1, 0)) < 0.1f)
         {
-            activeTween = new Tween(player.transform.position, new Vector3(6, -1, 0), Time.time);
+            activeTween = new Tween(player.transform.position, new Vector3(6, -1, 0), Time.time, 0.3f);
             animatorController.SetTrigger("Right");
         }
         else if (Vector3.Distance(player.transform.position, new Vector3(6, -5, 0)) < 0.1f)
         {
-            activeTween = new Tween(player.transform.position, new Vector3(1, -5, 0), Time.time);
+            activeTween = new Tween(player.transform.position, new Vector3(1, -5, 0), Time.time, 0.3f);
             animatorController.SetTrigger("Left");
         }
         else if (Vector3.Distance(player.transform.position, new Vector3(1, -5, 0)) < 0.1f)
         {
-            activeTween = new Tween(player.transform.position, new Vector3(1, -1, 0), Time.time);
+            activeTween = new Tween(player.transform.position, new Vector3(1, -1, 0), Time.time, 0.3f);
             animatorController.SetTrigger("Up");
         }
     }

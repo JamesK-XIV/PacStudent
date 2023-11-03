@@ -73,7 +73,7 @@ public class GhostManager : MonoBehaviour
             ghosts[ghost].GetComponentInParent<Animator>().SetTrigger("Dead");
             if (Random.Range(0,1) == 0)
             {
-                getController(ghost).moving = false;
+            ghosts[ghost].GetComponent<GhostController>().deadMove();
             }
         getController(ghost).ghostState = 2;
     }

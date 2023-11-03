@@ -171,22 +171,22 @@ public class GhostController : MonoBehaviour
         }
         if (a == 0)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time, 0.3f);
             lastDirection = 1;
         }
         if (a == 1)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
             lastDirection = 2;
         }
         if (a == 2)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
             lastDirection = 3;
         }
         if (a == 3)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.3f);
             lastDirection = 4;
         }
     }
@@ -214,26 +214,26 @@ public class GhostController : MonoBehaviour
         }
         if (downDistance <= upDistance && downDistance <= rightDistance && downDistance <= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time, 0.3f);
             lastDirection = 1;
             //animatorController.SetTrigger("Down");
 
         }
         else if (upDistance <= downDistance && upDistance <= rightDistance && upDistance <= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.3f);
             //animatorController.SetTrigger("Right");
             lastDirection = 4;
         }
         else if (rightDistance <= upDistance && rightDistance <= downDistance && rightDistance <= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
             //animatorController.SetTrigger("Left");
             lastDirection = 2;
         }
         else if (leftDistance <= upDistance && leftDistance <= rightDistance && leftDistance <= downDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
             //animatorController.SetTrigger("Up");
             lastDirection = 3;
         }
@@ -265,26 +265,26 @@ public class GhostController : MonoBehaviour
         }
         if (downDistance >= upDistance && downDistance >= rightDistance && downDistance >= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time, 0.3f);
             lastDirection = 1;
             //animatorController.SetTrigger("Down");
 
         }
         else if (upDistance >= downDistance && upDistance >= rightDistance && upDistance >= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.3f);
             //animatorController.SetTrigger("Right");
             lastDirection = 4;
         }
         else if (rightDistance >= upDistance && rightDistance >= downDistance && rightDistance >= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
             //animatorController.SetTrigger("Left");
             lastDirection = 2;
         }
         else if (leftDistance >= upDistance && leftDistance >= rightDistance && leftDistance >= downDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
             //animatorController.SetTrigger("Up");
             lastDirection = 3;
         }
@@ -317,26 +317,26 @@ public class GhostController : MonoBehaviour
         }
         if (downDistance <= upDistance && downDistance <= rightDistance && downDistance <= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.down, Time.time, 0.3f);
             lastDirection = 1;
             //animatorController.SetTrigger("Down");
 
         }
         else if (upDistance <= downDistance && upDistance <= rightDistance && upDistance <= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.3f);
             //animatorController.SetTrigger("Right");
             lastDirection = 4;
         }
         else if (rightDistance <= upDistance && rightDistance <= downDistance && rightDistance <= leftDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
             //animatorController.SetTrigger("Left");
             lastDirection = 2;
         }
         else if (leftDistance <= upDistance && leftDistance <= rightDistance && leftDistance <= downDistance)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
             //animatorController.SetTrigger("Up");
             lastDirection = 3;
         }
@@ -348,7 +348,7 @@ public class GhostController : MonoBehaviour
     {
         if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) > 0.1f)
         {
-            float percentage = (Time.time - activeTween.StartTime) / (Vector3.Distance(activeTween.StartPos, activeTween.EndPos)/3);
+            float percentage = (Time.time - activeTween.StartTime) /activeTween.Duration;
             gameObject.transform.position = Vector3.Lerp(activeTween.StartPos, activeTween.EndPos, percentage);
         }
         if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) < 0.1f)
@@ -361,17 +361,17 @@ public class GhostController : MonoBehaviour
     {
         if (transform.position.x == 15)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
         }
         if (transform.position.x == 12)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
         }
         else
         {
             if (transform.position.y == -15 || transform.position.y == -14 || transform.position.y == -13 || transform.position.y == -12)
             {
-                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time);
+                activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.up, Time.time, 0.3f);
             }
             else
             {
@@ -420,15 +420,21 @@ public class GhostController : MonoBehaviour
     }
     private void moveBack(int direction)
     {
-        if (direction == 2)
-        {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time);
-            lastDirection = 2;
-        }
         if (direction == 3)
         {
-            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time);
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.right, Time.time, 0.3f);
+            lastDirection = 2;
+        }
+        if (direction == 2)
+        {
+            activeTween = new Tween(gameObject.transform.position, gameObject.transform.position + Vector3.left, Time.time, 0.3f);
             lastDirection = 3;
         }
+    }
+    public void deadMove()
+    {
+        activeTween = null;
+        activeTween = new Tween(gameObject.transform.position, spawnPos, Time.time, 5);
+        spawn = ghostSpawn.spawn;
     }
 }
