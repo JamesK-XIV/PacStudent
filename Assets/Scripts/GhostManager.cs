@@ -36,14 +36,12 @@ public class GhostManager : MonoBehaviour
                 if (scaredTimer >= 7 && scaredTimer <= 10)
                 {
                     ghosts[x].GetComponent<Animator>().SetTrigger("Recover");
-                    Debug.Log("Recover");
                 }
                 if (scaredTimer >= 10)
                 {
                     ghosts[x].GetComponent<Animator>().ResetTrigger("Scared");
                     ghosts[x].GetComponent<Animator>().ResetTrigger("Recover");
                     ghosts[x].GetComponent<Animator>().SetTrigger("Neutral");
-                    Debug.Log("Neutral");
                     getController(x).ghostState = 0;
                 }
             }
@@ -81,18 +79,16 @@ public class GhostManager : MonoBehaviour
         getController(1).ghostState = 1;
         getController(2).ghostState = 1;
         getController(3).ghostState = 1;
-        ghosts[0].GetComponent<Animator>().ResetTrigger("Scared");
-        ghosts[1].GetComponent<Animator>().ResetTrigger("Scared");
-        ghosts[2].GetComponent<Animator>().ResetTrigger("Scared");
-        ghosts[3].GetComponent<Animator>().ResetTrigger("Scared");
-        ghosts[0].GetComponent<Animator>().ResetTrigger("Recover");
-        ghosts[1].GetComponent<Animator>().ResetTrigger("Recover");
-        ghosts[2].GetComponent<Animator>().ResetTrigger("Recover");
-        ghosts[3].GetComponent<Animator>().ResetTrigger("Recover");
-        ghosts[0].GetComponent<Animator>().SetTrigger("Neutral");
-        ghosts[1].GetComponent<Animator>().SetTrigger("Neutral");
-        ghosts[2].GetComponent<Animator>().SetTrigger("Neutral");
-        ghosts[3].GetComponent<Animator>().SetTrigger("Neutral");
+        for (int x = 0; x < ghosts.Length; x++)
+        {
+            ghosts[x].GetComponent<Animator>().ResetTrigger("Scared");
+            ghosts[x].GetComponent<Animator>().ResetTrigger("Recover");
+            ghosts[x].GetComponent<Animator>().ResetTrigger("Up");
+            ghosts[x].GetComponent<Animator>().ResetTrigger("Down");
+            ghosts[x].GetComponent<Animator>().ResetTrigger("Left");
+            ghosts[x].GetComponent<Animator>().ResetTrigger("Right");
+            ghosts[x].GetComponent<Animator>().SetTrigger("Neutral");
+        }
         scaredTimer = 0;
     }
 

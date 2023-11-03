@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class UIManagerGame : MonoBehaviour
 {
     public GameObject save;
-    private PacStudentController playerController;
     public Text scoreTxt;
     public Text GhostTimer;
     public GameObject[] lifes;
     public Text startTxt;
     private float countdown = 4;
     public GameConnector gameConnector;
+    private GameObject ConnectorGameObject;
     public Text timerTxt;
     public Text gameOverTxt;
     private float gameTime;
@@ -21,6 +21,7 @@ public class UIManagerGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ConnectorGameObject = GameObject.FindGameObjectWithTag("Connector");
         gameConnector = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
         scoreTxt = GameObject.FindGameObjectWithTag("ScoreTxt").GetComponent<Text>();
         GhostTimer.enabled = false;
@@ -93,7 +94,7 @@ public class UIManagerGame : MonoBehaviour
     public void LoadMainMenu()
     {
         Destroy(save);
-        Destroy(gameConnector);
+        Destroy(ConnectorGameObject);
         gameConnector.MenuState();
         SceneManager.LoadSceneAsync(0);
     }

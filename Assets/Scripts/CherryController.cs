@@ -29,6 +29,7 @@ public class CherryController : MonoBehaviour
             if (timer >= 10)
             {
                 spawnCherry();
+                timer = 0;
             }
             if (cherryClone != null)
             {

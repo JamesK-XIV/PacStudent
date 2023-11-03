@@ -37,7 +37,6 @@ public class UIManager : MonoBehaviour
     }
     public void setScore(int Score)
     {
-        Debug.Log(Score);
         scoreTxt.text = ("Score: " + Score.ToString());
     }
     public void setTime(float gameTime)

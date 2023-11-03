@@ -35,22 +35,18 @@ public class SaveGameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt(HighScore, (int)gameMangaer.PacStudentController.getScore());
         }
-        Debug.Log("Score: " + PlayerPrefs.GetInt(HighScore));
     }
     private void saveTime()
     {
         if ((int)gameMangaer.PacStudentController.getScore() == PlayerPrefs.GetInt(HighScore))
         {
-            Debug.Log("PassA");
             if (gameMangaer.UIManager.getTime() < PlayerPrefs.GetFloat(FastTime) || PlayerPrefs.GetFloat(FastTime) == 0f)
             {
-                Debug.Log("PassB");
                 PlayerPrefs.SetFloat(FastTime, gameMangaer.UIManager.getTime());
             }
         }
         if ((int)gameMangaer.PacStudentController.getScore() > PlayerPrefs.GetInt(HighScore))
         {
-            Debug.Log("PassC");
             PlayerPrefs.SetFloat(FastTime, gameMangaer.UIManager.getTime());
         }
         }
@@ -58,12 +54,10 @@ public class SaveGameManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(HighScore))
         {
-            Debug.Log("Score: " + HighScore);
             ui.setScore(PlayerPrefs.GetInt(HighScore));
         }
         if (PlayerPrefs.HasKey(FastTime))
         {
-            Debug.Log("A" + PlayerPrefs.GetFloat(FastTime));
             ui.setTime(PlayerPrefs.GetFloat(FastTime));
         }
     }

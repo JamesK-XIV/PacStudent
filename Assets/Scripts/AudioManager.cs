@@ -20,6 +20,10 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (aud.clip == clips[0] && GameConnector.currentGameState == GameConnector.GameState.Start)
+        {
+            aud.Stop();
+        }
         if (!aud.isPlaying)
         {
             if (connector.GhostManager.getMusic() == GhostManager.GhostsMusic.scared && GameConnector.currentGameState == GameConnector.GameState.Start)
@@ -30,7 +34,15 @@ public class AudioManager : MonoBehaviour
             {
                 aud.clip = clips[1];
             }
-            aud.Play();
+            if (GameConnector.currentGameState == GameConnector.GameState.Wait)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                aud.Play();
+            }
+            
         }
 
     }

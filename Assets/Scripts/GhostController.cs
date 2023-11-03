@@ -66,6 +66,12 @@ public class GhostController : MonoBehaviour
                 {
                     valid[0] = false;
                 }
+                else if(hit.collider.gameObject.tag.Equals("SpawnSafety"))
+                {
+                    transform.position = spawnPos;
+                    spawn = ghostSpawn.spawn;
+                    leaveSpwan();
+                }
                 else
                 {
                     valid[0] = true;
@@ -87,6 +93,11 @@ public class GhostController : MonoBehaviour
                 else if (hit.collider.gameObject.tag.Equals("TeleporterLeft") || hit.collider.gameObject.tag.Equals("TeleporterRight"))
                 {
                     moveBack(back);
+                }
+                else if (hit.collider.gameObject.tag.Equals("SpawnSafety"))
+                {
+                    transform.position = spawnPos;
+                    leaveSpwan();
                 }
                 else
                 {
@@ -110,6 +121,11 @@ public class GhostController : MonoBehaviour
                 {
                     moveBack(back);
                 }
+                else if (hit.collider.gameObject.tag.Equals("SpawnSafety"))
+                {
+                    transform.position = spawnPos;
+                    leaveSpwan();
+                }
                 else
                 {
                     valid[2] = true;
@@ -128,6 +144,11 @@ public class GhostController : MonoBehaviour
                 {
                     valid[3] = false;
                 }
+                else if (hit.collider.gameObject.tag.Equals("SpawnSafety"))
+                {
+                    transform.position = spawnPos;
+                    leaveSpwan();
+                }
                 else
                 {
                     valid[3] = true;
@@ -140,11 +161,11 @@ public class GhostController : MonoBehaviour
         }
         if (activeTween == null)
         {
-            if (name == "PurpleGhostPhone" || ghostState == 1)
+            if (name == "GreenGhostPhone"|| ghostState == 1)
             {
                 DecideRun(valid);
             }
-            else if (name == "GreenGhostPhone")
+            else if (name == "PurpleGhostPhone")
             {
                 DecideMovement(valid);
             }
@@ -284,7 +305,6 @@ public class GhostController : MonoBehaviour
             //animatorController.SetTrigger("Up");
             lastDirection = 3;
         }
-        target = new Vector3(13, -11, 0);
 
     }
     private void DecideWall(bool[] checks)
@@ -339,6 +359,7 @@ public class GhostController : MonoBehaviour
     }
     private void tweener()
     {
+        setAnimation();
         if (Vector3.Distance(gameObject.transform.position, activeTween.EndPos) > 0.1f)
         {
             float percentage = (Time.time - activeTween.StartTime) /activeTween.Duration;
@@ -348,6 +369,26 @@ public class GhostController : MonoBehaviour
         {
             gameObject.transform.position = activeTween.EndPos;
             activeTween = null;
+            GetComponent<Animator>().SetTrigger("Neutral");
+        }
+    }
+    private void setAnimation()
+    {
+        if (lastDirection == 1)
+        {
+            GetComponent<Animator>().SetTrigger("Down");
+        }
+        if (lastDirection == 2)
+        {
+            GetComponent<Animator>().SetTrigger("Right");
+        }
+        if (lastDirection == 3)
+        {
+            GetComponent<Animator>().SetTrigger("Left");
+        }
+        if (lastDirection == 4)
+        {
+            GetComponent<Animator>().SetTrigger("Up");
         }
     }
     private void leaveSpwan()

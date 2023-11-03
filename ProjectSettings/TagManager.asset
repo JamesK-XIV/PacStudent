@@ -22,6 +22,7 @@ TagManager:
   - Save
   - GhostManager
   - AudioManager
+  - SpawnSafety
   layers:
   - Default
   - TransparentFX

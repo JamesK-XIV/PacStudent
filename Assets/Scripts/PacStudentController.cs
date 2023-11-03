@@ -12,7 +12,6 @@ public class PacStudentController : MonoBehaviour
     public Animator animatorController;
     public AudioSource aud;
     public AudioClip[] audioclips;
-    private float temptime;
     private string lastInput;
     private string currentInput;
     private float lifeCount;
@@ -22,12 +21,11 @@ public class PacStudentController : MonoBehaviour
     private float playerScore;
     public GameConnector gameManager;
     public GameObject startPos;
-    private bool canMove;
+    private float walkSound;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("Connector").GetComponent<GameConnector>();
-        canMove = false;
         playerAlive = true;
         playerScore = 0;
         lifeCount = 3 ;
@@ -39,6 +37,7 @@ public class PacStudentController : MonoBehaviour
     {
         if (GameConnector.currentGameState == GameConnector.GameState.Start && playerAlive)
         {
+            walkSound += Time.deltaTime;
             getInput();
             if (activeTween != null)
             {
@@ -69,10 +68,10 @@ public class PacStudentController : MonoBehaviour
                     }
                     hitObject = null;
                 }
-                if (Time.time > (temptime + 0.5) && !aud.isPlaying)
+                if (walkSound > 0.5)
                 {
                     aud.Play();
-                    temptime = Time.time;
+                    walkSound = 0;
                 }
             }
             else
@@ -202,6 +201,7 @@ public class PacStudentController : MonoBehaviour
         yield return null;
         if (collider.gameObject.tag.Equals("Pellet"))
         {
+            walkSound = 0;
             aud.clip = audioclips[1];
             aud.Play();
             playerScore += 10;
@@ -213,21 +213,23 @@ public class PacStudentController : MonoBehaviour
         }
         else if (collider.gameObject.tag.Equals("Cherry"))
         {
+            aud.clip = audioclips[1];
+            aud.Play();
             playerScore += 100;
             Destroy(collider.gameObject);
         }
         else if (collider.gameObject.tag.Equals("PowerUp"))
         {
+            walkSound = 0;
+            aud.clip = audioclips[1];
+            aud.Play();
             gameManager.PowerUp();
-            Debug.Log("SUPER TIME");
             Destroy(collider.gameObject);
         }
         else if (collider.gameObject.tag.Equals("Enemy"))
         {
-            Debug.Log(gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)));
             if (gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)) == 1)
             {
-                Debug.Log(collider.gameObject.name);
                 playerScore += 300;
                 gameManager.deadGhost(ghostTranslater(collider.gameObject.name));
             }
@@ -237,7 +239,6 @@ public class PacStudentController : MonoBehaviour
                 {
                     gameManager.AudioManager.playerDeath();
                     lifeCount -= 1;
-                    Debug.Log("Lifes:" + lifeCount.ToString());
                     gameManager.UIManager.loseLife((int)lifeCount);
                     lastInput = null;
                     currentInput = null;
@@ -264,7 +265,6 @@ public class PacStudentController : MonoBehaviour
             player.transform.position = startPos.transform.position;
             gameObject.GetComponent<Animator>().ResetTrigger("Death");
             gameObject.GetComponent<Animator>().ResetTrigger("Neutral");
-            Debug.Log(lifeCount);
             playerAlive = true;
         }
         particles[0].Stop();
