@@ -860,7 +860,7 @@ GameObject:
   - component: {fileID: 352373176}
   m_Layer: 5
   m_Name: TimerTxt
-  m_TagString: Untagged
+  m_TagString: Timer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

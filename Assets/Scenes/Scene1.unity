@@ -11143,7 +11143,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 231660861}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 617591542}
+        m_TargetAssemblyTypeName: UIManagerGame, Assembly-CSharp
+        m_MethodName: LoadMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &231660861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25405,9 +25417,9 @@ MonoBehaviour:
   scoreTxt: {fileID: 161694807}
   GhostTimer: {fileID: 2085884002}
   lifes:
-  - {fileID: 1443364905}
-  - {fileID: 1291945199}
   - {fileID: 142133126}
+  - {fileID: 1291945199}
+  - {fileID: 1443364905}
   startTxt: {fileID: 2128141256}
   gameConnector: {fileID: 0}
   timerTxt: {fileID: 1990884704}
@@ -57546,6 +57558,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d070bec7d09ef9e46b81b5cde21e9aef, type: 3}
   - {fileID: 8300000, guid: 8861d4417bdd5f34ca5525a47310f063, type: 3}
   - {fileID: 8300000, guid: 563b2d923f0fb8743a80e94a94aa62b1, type: 3}
+  - {fileID: 8300000, guid: c385b7e811f1a2541849d2964ee5082f, type: 3}
   connector: {fileID: 0}
   recover: 0
 --- !u!82 &1372090744

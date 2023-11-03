@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!(aud.isPlaying))
+        if (!(aud.isPlaying) && GameConnector.currentGameState == GameConnector.GameState.Start)
         {
             aud.clip = clips[1];
             aud.Play();
@@ -53,5 +53,11 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSeconds(1.8f);
         aud.Stop();
         recover = false;
+    }
+    public void playerDeath()
+    {
+        aud.Stop();
+        aud.clip = clips[4];
+        aud.Play();
     }
 }

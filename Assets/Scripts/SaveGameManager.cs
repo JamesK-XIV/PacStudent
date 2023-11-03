@@ -6,15 +6,14 @@ using UnityEngine;
 public class SaveGameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    const string Score = "";
-    const string Time = "";
+    const string HighScore = "Score";
+    const string FastTime = "Time";
     public GameConnector gameMangaer = null;
     public UIManager ui;
     private bool saving;
     void Start()
     {
-        loadSpeed();
-
+        
     }
 
     // Update is called once per frame
@@ -22,29 +21,50 @@ public class SaveGameManager : MonoBehaviour
     {
         if (GameConnector.currentGameState == GameConnector.GameState.End && saving == false)
         {
-            StartCoroutine(saveScore());
+            saveTime();
+            saveScore();
+            gameMangaer.UIManager.LoadMainMenu();
+            saving = false;
+            gameMangaer = null;
         }
     }
-    IEnumerator saveScore()
+    private void saveScore()
     {
         saving = true;
-        Debug.Log(saving);
-        PlayerPrefs.SetInt(Score, (int)gameMangaer.PacStudentController.getScore());
-        if ((int)gameMangaer.PacStudentController.getScore() > PlayerPrefs.GetInt(Score))
+        if ((int)gameMangaer.PacStudentController.getScore() > PlayerPrefs.GetInt(HighScore))
         {
-            PlayerPrefs.SetInt(Score, (int)gameMangaer.PacStudentController.getScore());
-            PlayerPrefs.Save();
+            PlayerPrefs.SetInt(HighScore, (int)gameMangaer.PacStudentController.getScore());
         }
-        gameMangaer.UIManager.LoadMainMenu();
-        saving = false;
-        gameMangaer = null;
-        yield return null;
+        Debug.Log("Score: " + PlayerPrefs.GetInt(HighScore));
     }
-    public void loadSpeed()
+    private void saveTime()
     {
-        if (PlayerPrefs.HasKey(Score))
+        if ((int)gameMangaer.PacStudentController.getScore() == PlayerPrefs.GetInt(HighScore))
         {
-            ui.setScore(PlayerPrefs.GetInt(Score));
+            Debug.Log("PassA");
+            if (gameMangaer.UIManager.getTime() < PlayerPrefs.GetFloat(FastTime) || PlayerPrefs.GetFloat(FastTime) == 0f)
+            {
+                Debug.Log("PassB");
+                PlayerPrefs.SetFloat(FastTime, gameMangaer.UIManager.getTime());
+            }
+        }
+        if ((int)gameMangaer.PacStudentController.getScore() > PlayerPrefs.GetInt(HighScore))
+        {
+            Debug.Log("PassC");
+            PlayerPrefs.SetFloat(FastTime, gameMangaer.UIManager.getTime());
+        }
+        }
+    public void LoadScores()
+    {
+        if (PlayerPrefs.HasKey(HighScore))
+        {
+            Debug.Log("Score: " + HighScore);
+            ui.setScore(PlayerPrefs.GetInt(HighScore));
+        }
+        if (PlayerPrefs.HasKey(FastTime))
+        {
+            Debug.Log("A" + PlayerPrefs.GetFloat(FastTime));
+            ui.setTime(PlayerPrefs.GetFloat(FastTime));
         }
     }
     public void setConnector()

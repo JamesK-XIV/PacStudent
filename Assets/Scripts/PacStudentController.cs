@@ -30,14 +30,14 @@ public class PacStudentController : MonoBehaviour
         canMove = false;
         playerAlive = true;
         playerScore = 0;
-        lifeCount = 3;
+        lifeCount = 3 ;
         currentInput = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameConnector.currentGameState == GameConnector.GameState.Start)
+        if (GameConnector.currentGameState == GameConnector.GameState.Start && playerAlive)
         {
             getInput();
             if (activeTween != null)
@@ -234,26 +234,27 @@ public class PacStudentController : MonoBehaviour
             }
             else if (gameManager.GhostManager.getStatus(ghostTranslater(collider.gameObject.name)) == 0)
             {
-                lifeCount = 0;
+                if (playerAlive)
+                {
+                    gameManager.AudioManager.playerDeath();
+                    lifeCount -= 1;
+                    Debug.Log("Lifes:" + lifeCount.ToString());
+                    gameManager.UIManager.loseLife((int)lifeCount);
+                    lastInput = null;
+                    currentInput = null;
+                    activeTween = null;
+                    playerAlive = false;
+                    StartCoroutine(playerDeath());
+                }
                 if (lifeCount == 0)
                 {
                     gameManager.EndGame();
-                }
-                else
-                {
-                    StartCoroutine(playerDeath());
                 }
             }
         }
     }
     IEnumerator playerDeath()
     {
-        playerAlive = false;
-        gameManager.UIManager.loseLife();
-        lifeCount -= 1;
-        lastInput = null;
-        currentInput = null;
-        activeTween = null;
         while (!playerAlive)
         {
             gameObject.GetComponent<Animator>().SetTrigger("Neutral");

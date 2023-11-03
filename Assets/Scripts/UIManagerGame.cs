@@ -93,6 +93,7 @@ public class UIManagerGame : MonoBehaviour
     public void LoadMainMenu()
     {
         Destroy(save);
+        Destroy(gameConnector);
         gameConnector.MenuState();
         SceneManager.LoadSceneAsync(0);
     }
@@ -123,16 +124,18 @@ public class UIManagerGame : MonoBehaviour
         remainTime = -1;
         yield return null;
     }
-    public void loseLife()
+    public void loseLife(int life)
     {
-        Debug.Log(lifes.Length);
-        Destroy(lifes[lifes.Length - 1]);
-        lifes = GameObject.FindGameObjectsWithTag("Life");
+        Destroy(lifes[life]);
     }
     public void setScore(int Score)
     {
         scoreTxt = GameObject.FindGameObjectWithTag("ScoreTxt").GetComponent<Text>();
         scoreTxt.text = ("Score: " + Score.ToString());
+    }
+    public float getTime()
+    {
+        return gameTime;
     }
     public void showGameOver()
     {
@@ -141,7 +144,8 @@ public class UIManagerGame : MonoBehaviour
 
     IEnumerator gameOver()
     {
-        int overTime = 10;
+        timerTxt = null;
+        int overTime = 3;
         while (overTime >= 0)
         {
             gameOverTxt.enabled = true;
