@@ -206,7 +206,6 @@ public class PacStudentController : MonoBehaviour
             aud.Play();
             playerScore += 10;
             Destroy(collider.gameObject);
-            Debug.Log(GameObject.FindGameObjectsWithTag("Pellet").Length);
             if (GameObject.FindGameObjectsWithTag("Pellet").Length == 1)
             {
                 gameManager.EndGame();

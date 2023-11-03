@@ -113,12 +113,10 @@ public class UIManagerGame : MonoBehaviour
     }
     IEnumerator scaredCount()
     {
-        remainTime = 10;
-        while (remainTime >= 0)
+        while (gameConnector.GhostManager.getScaredTime() >= 0)
         {
-            GhostTimer.text = ("Scared Time: " + (remainTime).ToString());
-            yield return new WaitForSeconds(1);
-            remainTime--;
+            GhostTimer.text = ("Scared Time: " + (10-(int)gameConnector.GhostManager.getScaredTime()).ToString());
+            yield return null;
         }
         GhostTimer.enabled = false;
         remainTime = -1;

@@ -16,7 +16,7 @@ public class GhostController : MonoBehaviour
     public GameObject player;
     private enum ghostSpawn { spawn, outside };
     private ghostSpawn spawn = ghostSpawn.spawn;
-    private Vector2 target;
+    private Vector3 target;
     private Vector3 spawnPos;
     private void Start()
     {
@@ -53,7 +53,6 @@ public class GhostController : MonoBehaviour
     }
     private void checkMovement(int back)
     {
-        Debug.Log(back);
         bool[] valid = new bool[4];
         valid[0] = false;
         valid[1] = false;
@@ -236,8 +235,6 @@ public class GhostController : MonoBehaviour
             //animatorController.SetTrigger("Up");
             lastDirection = 3;
         }
-        Debug.Log(transform.position);
-        Debug.Log(gameObject.name + upDistance + " : " + rightDistance + " : " + downDistance + " : " + leftDistance);
 
     }
     private void DecideRun(bool[] checks)
@@ -287,8 +284,7 @@ public class GhostController : MonoBehaviour
             //animatorController.SetTrigger("Up");
             lastDirection = 3;
         }
-        Debug.Log(transform.position);
-        Debug.Log(gameObject.name + upDistance + " : " + rightDistance + " : " + downDistance + " : " + leftDistance);
+        target = new Vector3(13, -11, 0);
 
     }
     private void DecideWall(bool[] checks)
@@ -339,8 +335,6 @@ public class GhostController : MonoBehaviour
             //animatorController.SetTrigger("Right");
             lastDirection = 4;
         }
-        Debug.Log(transform.position);
-        Debug.Log(gameObject.name + upDistance + " : " + rightDistance + " : " + downDistance + " : " + leftDistance);
 
     }
     private void tweener()

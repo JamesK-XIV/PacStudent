@@ -28,8 +28,18 @@ public class GhostManager : MonoBehaviour
         {
             if (getController(x).ghostState == 1)
             {
+                ghosts[x].GetComponent<Animator>().SetTrigger("Scared");
+                if (scaredTimer >= 7)
+                {
+                    ghosts[x].GetComponent<Animator>().SetTrigger("Recover");
+                    Debug.Log("Recover");
+                }
                 if (scaredTimer >= 10)
                 {
+                    ghosts[x].GetComponent<Animator>().ResetTrigger("Scared");
+                    ghosts[x].GetComponent<Animator>().ResetTrigger("Recover");
+                    ghosts[x].GetComponent<Animator>().SetTrigger("Neutral");
+                    Debug.Log("Neutral");
                     getController(x).ghostState = 0;
                 }
             }
@@ -37,7 +47,14 @@ public class GhostManager : MonoBehaviour
                 deadTimer[x] += Time.deltaTime;
             if (deadTimer[x] >= 10)
             {
-                getController(x).ghostState = 0;
+                if (scaredTimer < 10)
+                {
+                    getController(x).ghostState = 1;
+                }
+                else
+                {
+                    getController(x).ghostState = 0;
+                }
                 deadTimer[x] = 0;
             }
         }
@@ -53,10 +70,10 @@ public class GhostManager : MonoBehaviour
         getController(1).ghostState = 1;
         getController(2).ghostState = 1;
         getController(3).ghostState = 1;
-        ghosts[0].GetComponent<Animator>().SetTrigger("Scared");
-        ghosts[1].GetComponent<Animator>().SetTrigger("Scared");
-        ghosts[2].GetComponent<Animator>().SetTrigger("Scared");
-        ghosts[3].GetComponent<Animator>().SetTrigger("Scared");
+        ghosts[0].GetComponent<Animator>().SetTrigger("Neutral");
+        ghosts[1].GetComponent<Animator>().SetTrigger("Neutral");
+        ghosts[2].GetComponent<Animator>().SetTrigger("Neutral");
+        ghosts[3].GetComponent<Animator>().SetTrigger("Neutral");
         scaredTimer = 0;
     }
 
@@ -80,5 +97,9 @@ public class GhostManager : MonoBehaviour
     public bool allAlive()
     {
         return (getController(0).ghostState == 0 && getController(1).ghostState == 0 && getController(2).ghostState == 0 && getController(3).ghostState == 0);
+    }
+    public float getScaredTime()
+    {
+        return scaredTimer;
     }
 }
